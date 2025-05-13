@@ -38,8 +38,10 @@ php artisan key:generate
 ```
 
 ### 4. Konfigurasi koneksi database
-copy .env.example .env
-php artisan key:generate
+DB_DATABASE=sistem_akademik
+DB_USERNAME=root
+DB_PASSWORD=
+
 
 ## 🧱 Migrasi dan Seeder
 
