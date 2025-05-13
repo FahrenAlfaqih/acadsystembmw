@@ -53,12 +53,12 @@ php artisan migrate
 php artisan db:seed
 ```
 
-### 7. 🔗 Membuat Storage Link
+### 7. Membuat Storage Link
 ```bash
 php artisan storage:link
 ```
 
-### 8. ▶️ Menjalankan Server Lokal
+### 8. Menjalankan Server Lokal
 ```bash
 php artisan serve
 ```
