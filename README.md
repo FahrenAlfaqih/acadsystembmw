@@ -1,7 +1,7 @@
 # 📘 Sistem Akademik
 
 
-Sistem Akademik adalah aplikasi Laravel untuk mengelola data guru, kelas, dan relasi antara keduanya.
+Sistem Akademik adalah aplikasi Laravel untuk mengelola data keperluan akademik terkait Manajamen Guru, Siswa, Nilai, dan Presensi
 
 ---
 
@@ -20,11 +20,6 @@ Sistem Akademik adalah aplikasi Laravel untuk mengelola data guru, kelas, dan re
 ![image](https://github.com/user-attachments/assets/4b323357-4cd2-4cf2-b1ec-8fb88576cf75)
 ![image](https://github.com/user-attachments/assets/082f0d72-d4c1-4f97-8d5c-13f0bc596170)
 ![image](https://github.com/user-attachments/assets/b027182b-d242-4185-8040-47bfbf162546)
-
-
-
-
-
 
 
 
