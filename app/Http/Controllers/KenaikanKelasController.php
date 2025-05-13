@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Kelas;
+use App\Models\Nilai;
+use App\Models\Presensi;
+use App\Models\RiwayatKelas;
+use App\Models\Semester;
+use App\Models\Siswa;
+use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
+class KenaikanKelasController extends Controller
+{
+    public function formNaikKelas()
+    {
+        $kelasId = auth()->user()->guru->kelas_id;
+        $siswa = Siswa::with('kelas')
+            ->where('kelas_id', $kelasId)
+            ->get();
+
+        $kelas = Kelas::all();
+        $kelasSaatIni = Kelas::find($kelasId);
+
+        $tahunAjaran = Semester::where('tipe', 'Genap')
+            ->distinct()
+            ->pluck('tahun_ajaran');
+        $semesterAktif = Semester::latest()->first();
+
+        return view('kenaikan_kelas.index', compact('siswa', 'kelas', 'kelasSaatIni', 'tahunAjaran'));
+    }
+
+
+    public function prosesNaikKelas(Request $request)
+    {
+        $request->validate([
+            'siswa_ids' => 'required|array',
+            'siswa_ids.*' => 'exists:siswa,id',
+            'kelas_baru_id' => 'required|exists:kelas,id',
+            'tahun_ajaran' => 'required|string',
+        ]);
+
+        foreach ($request->siswa_ids as $siswaId) {
+            $siswa = Siswa::findOrFail($siswaId);
+
+            // Update kelas_id di tabel nilai
+            Nilai::where('siswa_id', $siswa->id)->update([
+                'kelas_id' => $siswa->kelas_id,
+            ]);
+
+            // Update kelas_id di tabel presensi
+            Presensi::where('siswa_id', $siswa->id)->update([
+                'kelas_id' => $siswa->kelas_id,
+            ]);
+
+            // Simpan riwayat kelas
+            RiwayatKelas::create([
+                'siswa_id' => $siswa->id,
+                'kelas_id' => $siswa->kelas_id,
+                'tahun_ajaran' => $request->tahun_ajaran,
+                'naik_kelas' => true,
+            ]);
+
+            // Naikkan siswa ke kelas baru
+            $siswa->update([
+                'kelas_id' => $request->kelas_baru_id,
+            ]);
+        }
+        Alert::success('Berhasil', 'Kenaikan kelas berhasil diproses untuk semua siswa yang dipilih!');
+        return redirect()->back();
+    }
+}

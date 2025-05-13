@@ -1,0 +1,40 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Edit Mata Pelajaran
+            </h2>
+        </div>
+    </x-slot>
+
+    <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white p-6 rounded shadow">
+            <form action="{{ route('mapel.update', $mapel->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <!-- Kode Mapel -->
+                <div class="mb-4">
+                    <x-input label="Kode Mata Pelajaran" name="kode_mapel" required value="{{ old('kode_mapel', $mapel->kode_mapel) }}" />
+                </div>
+
+                <!-- Nama Mapel -->
+                <div class="mb-4">
+                    <x-input label="Nama Mata Pelajaran" name="nama_mapel" required value="{{ old('nama_mapel', $mapel->nama_mapel) }}" />
+                </div>
+
+                {{-- Tombol --}}
+                <div class="flex justify-end mt-8">
+                    <a href="{{ route('mapel.index') }}"
+                        class="inline-block px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg mr-3 transition">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">
+                        Update Mata Pelajaran
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</x-app-layout>
