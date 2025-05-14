@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:guru')->get('/kenaikan-kelas', [KenaikanKelasController::class, 'formNaikKelas'])->name('kenaikan-kelas.index');
     Route::middleware('role:guru')->post('/kenaikan-kelas', [KenaikanKelasController::class, 'prosesNaikKelas'])->name('kenaikan-kelas.proses');
 
+    Route::get('/siswa/create', [SiswaController::class, 'create'])->name('siswa.create');
+    Route::get('/guru/create', [GuruController::class, 'create'])->name('guru.create');
 
     Route::prefix('presensi')->group(function () {
         Route::get('/', [PresensiController::class, 'index'])->name('presensi.index');
@@ -83,7 +85,7 @@ Route::middleware(['auth', 'role:tatausaha'])->group(function () {
     Route::get('/guru/{id}', [GuruController::class, 'show'])->name('guru.show');
     Route::get('/siswa/{id}', [SiswaController::class, 'show'])->name('siswa.show');
 
-    // Resource routes untuk Tata Usaha
+
     Route::resource('siswa', SiswaController::class);
     Route::resource('guru', GuruController::class);
     Route::resource('kepalasekolah', KepalaSekolahController::class)->only(['index', 'create', 'store']);

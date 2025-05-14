@@ -27,12 +27,13 @@ class SiswaController extends Controller
         return view('siswa.index', compact('siswa'));
     }
 
+
+
     public function create()
     {
         $kelas = Kelas::all();
         return view('siswa.create', compact('kelas'));
     }
-
 
     public function store(Request $request)
     {

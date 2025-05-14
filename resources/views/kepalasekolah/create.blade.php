@@ -25,12 +25,12 @@
 
                     <!-- Password -->
                     <div>
-                        <x-input label="Password" name="password" required />
+                        <x-input label="Password" name="password" type="password" required />
                     </div>
 
                     <!-- Konfirmasi Password -->
                     <div>
-                        <x-input label="Konfirmasi Password" name="password_confirmation" required />
+                        <x-input label="Konfirmasi Password" name="password_confirmation" type="password" required />
                     </div>
 
                     <!-- NIP -->
@@ -70,7 +70,7 @@
                     {{-- Alamat --}}
                     <x-textarea name="alamat" label="Alamat" rows="3" />
                 </div>
-                
+
                 {{-- Tombol --}}
                 <div class="flex justify-end mt-8">
                     <a href="{{ route('kepalasekolah.index') }}"
