@@ -58,7 +58,7 @@ class SiswaController extends Controller
             $pathFoto = $foto->storeAs('foto_pengguna', $namaFile, 'public');
         }
 
-        // Simpan ke siswa
+        
         Siswa::create([
             'user_id' => $user->id,
             'kelas_id' => $request->kelas_id,

@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('presensi', function (Blueprint $table) {
-            $table->unsignedBigInteger('kelas_id')->after('guru_id');
-        });
+
     }
 
     public function down()
     {
-        Schema::table('presensi', function (Blueprint $table) {
-            $table->dropColumn('kelas_id');
-        });
+
     }
 };
