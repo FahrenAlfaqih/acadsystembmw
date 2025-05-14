@@ -41,6 +41,7 @@ class GuruController extends Controller
             'nip' => 'required|unique:guru,nip',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
         $pathFoto = null;
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
@@ -48,7 +49,7 @@ class GuruController extends Controller
             $pathFoto = $foto->storeAs('foto_pengguna', $namaFile, 'public');
         }
 
-        // Simpan ke users
+        // Simpan ke tabel users
         $user = User::create([
             'name' => $request->nama,
             'email' => $request->email,
@@ -56,22 +57,24 @@ class GuruController extends Controller
             'role' => 'guru',
         ]);
 
-        // Simpan ke guru
+        // Simpan ke tabel guru dengan data minimal
         Guru::create([
             'user_id' => $user->id,
             'nip' => $request->nip,
             'nama' => $request->nama,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat' => $request->alamat,
-            'no_telepon' => $request->no_telepon,
+            'tanggal_lahir' => null,
+            'jenis_kelamin' => null,
+            'alamat' => null,
+            'no_telepon' => null,
             'email' => $request->email,
-            'status' => $request->status,
+            'status' => 'Aktif',
             'foto' => $pathFoto,
         ]);
-        Alert::success('Berhasil', 'Data Guru berhasil ditambahkan!');
+
+        Alert::success('Berhasil', 'Akun Guru berhasil ditambahkan. Lengkapi data di menu Edit!');
         return redirect()->route('guru.index');
     }
+
 
     public function dashboard()
     {

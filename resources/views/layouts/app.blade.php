@@ -57,8 +57,27 @@
 
                 <!-- Wrapper menu -->
                 <div class="space-y-2">
+                    @if(auth()->user()->role === 'admin')
+                    <x-nav-link :href="route('guru.index')"
+                        :active="request()->routeIs('guru.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       {{ request()->routeIs('guru.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Tambah Pengguna Guru
+                    </x-nav-link>
+                    <x-nav-link :href="route('siswa.index')"
+                        :active="request()->routeIs('siswa.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       {{ request()->routeIs('siswa.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Tambah Pengguna Siswa
+                    </x-nav-link>
+                    <x-nav-link :href="route('kepalasekolah.index')"
+                        :active="request()->routeIs('kepalasekolah.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       {{ request()->routeIs('kepalasekolah.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Tambah Pengguna Kepala Sekolah
+                    </x-nav-link>
 
-                    @if(auth()->user()->role === 'tatausaha')
+                    @elseif(auth()->user()->role === 'tatausaha')
                     <x-nav-link :href="route('guru.index')"
                         :active="request()->routeIs('guru.index')"
                         class="w-full px-4 py-2 text-left rounded-md 

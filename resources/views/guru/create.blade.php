@@ -14,61 +14,50 @@
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Nama -->
                     <div>
                         <x-input label="Nama" name="nama" required />
                     </div>
 
-                    <!-- Email -->
                     <div>
                         <x-input label="Email" name="email" type="email" required />
                     </div>
 
-                    <!-- Password -->
                     <div>
                         <x-input label="Password" name="password" type="password" required />
                     </div>
 
-                    <!-- Konfirmasi Password -->
                     <div>
                         <x-input label="Konfirmasi Password" name="password_confirmation" type="password" required />
                     </div>
 
-                    <!-- NIP -->
                     <div>
                         <x-input label="NIP" name="nip" required />
                     </div>
 
-                    <!-- Tanggal Lahir -->
-                    <div>
+                    <!-- <div>
                         <x-input label="Tanggal Lahir" name="tanggal_lahir" type="date" />
                     </div>
 
-                    <!-- Jenis Kelamin -->
                     <div>
                         <x-select name="jenis_kelamin" label="Jenis Kelamin" :options="['Laki-laki' => 'Laki-laki', 'Perempuan' => 'Perempuan']" />
                     </div>
 
-                    <!-- Nomor Telepon -->
                     <div>
                         <x-input label="No Telepon" name="no_telepon" />
                     </div>
 
-                    <!-- Status -->
                     <div>
                         <x-select name="status" label="Status" :options="['Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif']" />
                     </div>
 
-                    <!-- Foto -->
                     <div>
                         <x-input label="Foto" name="foto" type="file" />
-                    </div>
+                    </div> -->
                 </div>
-
-                <!-- Alamat -->
+<!-- 
                 <div class="mt-4">
                     <x-textarea name="alamat" label="Alamat" rows="3" />
-                </div>
+                </div> -->
 
                 {{-- Tombol --}}
                 <div class="flex justify-end mt-8">

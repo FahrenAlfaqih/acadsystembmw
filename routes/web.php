@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    AdminController,
     GuruController,
     KepalaSekolahController,
     PresensiController,
@@ -41,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard per role
     Route::middleware('role:orangtua')->get('/dashboard/orangtua', fn() => view('dashboard.orangtua'));
     Route::middleware('role:guru')->get('/dashboard/guru', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::middleware('role:admin')->get('/dashboard/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::middleware('role:kepalasekolah')->get('/dashboard/kepalasekolah', [KepalaSekolahController::class, 'dashboard'])->name('dashboard.kepala');
     Route::middleware('role:guru')->get('/dashboard/guru/presensi/{kelas_id}/{mapel_id}/{semester_id}', [PresensiController::class, 'create'])->name('presensi.create');
 
@@ -49,6 +51,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/siswa/create', [SiswaController::class, 'create'])->name('siswa.create');
     Route::get('/guru/create', [GuruController::class, 'create'])->name('guru.create');
+
+    Route::get('/guru/{id}', [GuruController::class, 'show'])->name('guru.show');
+    Route::get('/siswa/{id}', [SiswaController::class, 'show'])->name('siswa.show');
+    Route::resource('siswa', SiswaController::class);
+    Route::resource('guru', GuruController::class);
+    Route::resource('kepalasekolah', KepalaSekolahController::class)->only(['index', 'create', 'store']);
+
 
     Route::prefix('presensi')->group(function () {
         Route::get('/', [PresensiController::class, 'index'])->name('presensi.index');
@@ -81,14 +90,6 @@ Route::middleware(['auth', 'role:siswa'])->group(function () {
 Route::middleware(['auth', 'role:tatausaha'])->group(function () {
     Route::get('/dashboard/tatausaha', [TataUsahaController::class, 'dashboard'])->name('dashboard.tatausaha');
     Route::get('/jadwal/filter', [JadwalMapelController::class, 'filterBySemester'])->name('jadwal.filter');
-
-    Route::get('/guru/{id}', [GuruController::class, 'show'])->name('guru.show');
-    Route::get('/siswa/{id}', [SiswaController::class, 'show'])->name('siswa.show');
-
-
-    Route::resource('siswa', SiswaController::class);
-    Route::resource('guru', GuruController::class);
-    Route::resource('kepalasekolah', KepalaSekolahController::class)->only(['index', 'create', 'store']);
     Route::resource('kelas', KelasController::class)->except(['show']);
     Route::resource('mapel', MapelController::class)->except(['show']);
     Route::resource('jadwal', JadwalMapelController::class)->except(['show']);
