@@ -64,12 +64,12 @@ class KepalaSekolahController extends Controller
             'user_id' => $user->id,
             'nip' => $request->nip,
             'nama' => $request->nama,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat' => $request->alamat,
-            'no_telepon' => $request->no_telepon,
-            'email' => $request->email,
-            'status' => $request->status,
+            'tanggal_lahir' => null,
+            'jenis_kelamin' => null,
+            'alamat' => null,
+            'no_telepon' => null,
+            'email' =>  $request->email,
+            'status' => 'Aktif',
             'foto' => $pathFoto,
         ]);
         Alert::success('Berhasil', 'Data Kepala Sekolah berhasil ditambahkan!');
@@ -96,26 +96,64 @@ class KepalaSekolahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KepalaSekolah $kepalaSekolah)
+    public function show($id)
     {
-        //
+        $kepalasekolah = KepalaSekolah::findOrFail($id);
+        return view('kepalasekolah.show', compact('kepalasekolah'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(KepalaSekolah $kepalaSekolah)
+    public function edit($id)
     {
-        //
+        $kepalasekolah = KepalaSekolah::findOrFail($id);
+        return view('kepalasekolah.update', compact('kepalasekolah'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, KepalaSekolah $kepalaSekolah)
+    public function update(Request $request, $id)
     {
-        //
+        $kepala_sekolah = KepalaSekolah::findOrFail($id);
+        $user = $kepala_sekolah->user;
+
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'nip' => 'required|unique:kepala_sekolah,nip,' . $kepala_sekolah->id,
+            'password' => 'nullable|confirmed|min:6',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $user->update([
+            'name' => $request->nama,
+            'email' => $request->email,
+            'password' => $request->password ? Hash::make($request->password) : $user->password,
+        ]);
+
+        if ($request->hasFile('foto')) {
+            if ($kepala_sekolah->foto && file_exists(public_path('storage/foto/' . $kepala_sekolah->foto))) {
+                unlink(public_path('storage/foto/' . $kepala_sekolah->foto));
+            }
+            $foto = $request->file('foto');
+            $fotoName = time() . '_' . uniqid() . '.' . $foto->getClientOriginalExtension();
+            $foto->storeAs('public/foto', $fotoName);
+        } else {
+            $fotoName = $kepala_sekolah->foto;
+        }
+
+        $kepala_sekolah->update([
+            'nip' => $request->nip,
+            'nama' => $request->nama,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'alamat' => $request->alamat,
+            'no_telepon' => $request->no_telepon,
+            'email' => $request->email,
+            'status' => $request->status,
+            'foto' => $fotoName,
+        ]);
+        Alert::success('Berhasil', 'Data Kepala Sekolah berhasil diperbarui!');
+
+        return redirect()->route('kepalasekolah.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

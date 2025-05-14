@@ -71,7 +71,7 @@ class GuruController extends Controller
             'foto' => $pathFoto,
         ]);
 
-        Alert::success('Berhasil', 'Akun Guru berhasil ditambahkan. Lengkapi data di menu Edit!');
+        Alert::success('Berhasil', 'Akun Guru berhasil ditambahkan. Lengkapi data di menu Edit sebagai Tata Usaha!');
         return redirect()->route('guru.index');
     }
 

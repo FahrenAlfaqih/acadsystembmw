@@ -13,7 +13,10 @@
                 <h3 class="font-semibold text-lg text-gray-800">
                     Daftar Siswa
                 </h3>
+                @if(auth()->user()->role === 'admin')
                 <a href="{{ route('siswa.create') }}" class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">Tambah Siswa</a>
+                @endif
+
             </div>
 
             @if($siswa->isEmpty())
@@ -26,9 +29,15 @@
                             <th class="py-3 px-4 text-sm font-medium">Nama</th>
                             <th class="py-3 px-4 text-sm font-medium">Email</th>
                             <th class="py-3 px-4 text-sm font-medium">NISN</th>
+
+                            @if(auth()->user()->role === 'tatausaha')
                             <th class="py-3 px-4 text-sm font-medium">Kelas</th>
+                            <th class="py-3 px-4 text-sm font-medium">Alamat</th>
+                            <th class="py-3 px-4 text-sm font-medium">No Telepon</th>
+                            <th class="py-3 px-4 text-sm font-medium">Orang tua</th>
                             <th class="py-3 px-4 text-sm font-medium">Status</th>
                             <th class="py-3 px-4 text-sm font-medium">Aksi</th>
+                            @endif
 
                         </tr>
                     </thead>
@@ -38,9 +47,14 @@
                             <td class="py-3 px-4 text-sm">{{ $data->nama }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->email }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nisn }}</td>
+
+                            @if(auth()->user()->role === 'tatausaha')
                             <td class="py-3 px-4 text-sm">
                                 {{ $data->kelas ? $data->kelas->nama_kelas : 'Kelas Tidak Ditemukan' }}
                             </td>
+                            <td class="py-3 px-4 text-sm">{{ $data->alamat }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $data->no_telepon }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $data->orangtua }}</td>
                             <td class="py-3 px-4 text-sm">
                                 <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full 
                                     {{ $data->status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
@@ -55,7 +69,7 @@
                                     Edit
                                 </a>
                             </td>
-
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

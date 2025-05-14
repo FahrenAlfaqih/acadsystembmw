@@ -58,22 +58,21 @@ class SiswaController extends Controller
             $pathFoto = $foto->storeAs('foto_pengguna', $namaFile, 'public');
         }
 
-        
         Siswa::create([
             'user_id' => $user->id,
-            'kelas_id' => $request->kelas_id,
+            'kelas_id' => null,
             'nisn' => $request->nisn,
             'nama' => $request->nama,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat' => $request->alamat,
-            'no_telepon' => $request->no_telepon,
+            'tanggal_lahir' => null,
+            'jenis_kelamin' => null,
+            'alamat' => null,
+            'no_telepon' => null,
             'email' => $request->email,
-            'status' => $request->status,
-            'orangtua' => $request->orangtua,
+            'status' => 'Aktif',
+            'orangtua' => null,
             'foto' => $pathFoto,
         ]);
-        Alert::success('Berhasil', 'Data Siswa berhasil disimpan!');
+        Alert::success('Berhasil', 'Akun Guru berhasil ditambahkan. Lengkapi data di menu Edit sebagai Tata Usaha!');
 
         return redirect()->route('siswa.index');
     }

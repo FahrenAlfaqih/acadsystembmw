@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/siswa/{id}', [SiswaController::class, 'show'])->name('siswa.show');
     Route::resource('siswa', SiswaController::class);
     Route::resource('guru', GuruController::class);
-    Route::resource('kepalasekolah', KepalaSekolahController::class)->only(['index', 'create', 'store']);
+    Route::resource('kepalasekolah', KepalaSekolahController::class);
 
 
     Route::prefix('presensi')->group(function () {

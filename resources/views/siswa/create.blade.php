@@ -30,33 +30,33 @@
                         <x-input label="NISN" name="nisn" required />
 
                         <!-- Tanggal Lahir -->
-                        <x-input label="Tanggal Lahir" name="tanggal_lahir" type="date" />
+                        <!-- <x-input label="Tanggal Lahir" name="tanggal_lahir" type="date" /> -->
                     </div>
 
                     <!-- Kolom Kanan -->
                     <div class="space-y-4">
                         <!-- Jenis Kelamin -->
-                        <x-select label="Jenis Kelamin" name="jenis_kelamin" :options="['Laki-laki', 'Perempuan']" />
+                        <!-- <x-select label="Jenis Kelamin" name="jenis_kelamin" :options="['Laki-laki', 'Perempuan']" /> -->
 
                         <!-- Alamat -->
-                        <x-textarea label="Alamat" name="alamat" rows="3" />
+                        <!-- <x-textarea label="Alamat" name="alamat" rows="3" /> -->
 
                         <!-- No Telepon -->
-                        <x-input label="No Telepon" name="no_telepon" />
+                        <!-- <x-input label="No Telepon" name="no_telepon" /> -->
 
                         <!-- Kelas -->
-                        <x-select label="Kelas" name="kelas_id" :options="$kelas->pluck('nama_kelas', 'id')" required />
+                        <!-- <x-select label="Kelas" name="kelas_id" :options="$kelas->pluck('nama_kelas', 'id')" required /> -->
 
 
                         <!-- Status -->
-                        <x-select name="status" label="Status" :options="['Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif']" />
+                        <!-- <x-select name="status" label="Status" :options="['Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif']" /> -->
 
 
                         <!-- Nama Orang Tua -->
-                        <x-input label="Nama Orang Tua" name="orangtua" />
+                        <!-- <x-input label="Nama Orang Tua" name="orangtua" /> -->
 
                         <!-- Foto -->
-                        <x-input label="Foto" name="foto" type="file" />
+                        <!-- <x-input label="Foto" name="foto" type="file" /> -->
                     </div>
                 </div>
 

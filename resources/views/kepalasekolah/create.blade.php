@@ -39,37 +39,37 @@
                     </div>
 
                     <!-- Tanggal Lahir -->
-                    <div>
+                    <!-- <div>
                         <x-input label="Tanggal Lahir" name="tanggal_lahir" type="date" />
-                    </div>
+                    </div> -->
 
                     <!-- Jenis Kelamin -->
-                    <div>
+                    <!-- <div>
                         <x-select name="jenis_kelamin" label="Jenis Kelamin" :options="['Laki-laki' => 'Laki-laki', 'Perempuan' => 'Perempuan']" />
-                    </div>
+                    </div> -->
 
                     <!-- No Telepon -->
-                    <div>
+                    <!-- <div>
                         <x-input label="Nomor Telepon" name="no_telepon" required />
 
-                    </div>
+                    </div> -->
 
                     <!-- Status -->
-                    <div>
+                    <!-- <div>
                         <x-select name="status" label="Status" :options="['Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif']" />
-                    </div>
+                    </div> -->
 
                     <!-- Foto -->
-                    <div>
+                    <!-- <div>
                         <x-input label="Foto" name="foto" type="file" />
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Alamat -->
-                <div class="mt-4">
+                <!-- <div class="mt-4">
                     {{-- Alamat --}}
                     <x-textarea name="alamat" label="Alamat" rows="3" />
-                </div>
+                </div> -->
 
                 {{-- Tombol --}}
                 <div class="flex justify-end mt-8">

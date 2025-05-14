@@ -76,7 +76,7 @@
 
                 <!-- Alamat -->
                 <div class="mt-4">
-                    <x-textarea name="alamat" label="Alamat" rows="3">{{ old('alamat', $guru->alamat) }}</x-textarea>
+                    <x-textarea name="alamat" label="Alamat Lengkap" :value="$guru->alamat ?? ''" rows="4" />
                 </div>
 
                 <!-- Tombol -->
