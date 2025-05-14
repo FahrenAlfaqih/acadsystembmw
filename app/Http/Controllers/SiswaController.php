@@ -315,7 +315,7 @@ class SiswaController extends Controller
     public function edit($id)
     {
         $siswa = Siswa::with('user')->findOrFail($id);
-        $kelas = Kelas::all(); 
+        $kelas = Kelas::all();
         return view('siswa.update', compact('siswa', 'kelas'));
     }
 
