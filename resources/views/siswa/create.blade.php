@@ -20,11 +20,6 @@
                         <!-- Email -->
                         <x-input label="Email" name="email" type="email" required />
 
-                        <!-- Password -->
-                        <x-input label="Password" name="password" type="password" required />
-
-                        <!-- Konfirmasi Password -->
-                        <x-input label="Konfirmasi Password" name="password_confirmation" type="password" required />
 
                         <!-- NISN -->
                         <x-input label="NISN" name="nisn" required />
@@ -35,6 +30,12 @@
 
                     <!-- Kolom Kanan -->
                     <div class="space-y-4">
+                        <!-- Password -->
+                        <x-input label="Password" name="password" type="password" required />
+
+                        <!-- Konfirmasi Password -->
+                        <x-input label="Konfirmasi Password" name="password_confirmation" type="password" required />
+
                         <!-- Jenis Kelamin -->
                         <!-- <x-select label="Jenis Kelamin" name="jenis_kelamin" :options="['Laki-laki', 'Perempuan']" /> -->
 

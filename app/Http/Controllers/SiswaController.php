@@ -72,7 +72,7 @@ class SiswaController extends Controller
             'orangtua' => null,
             'foto' => $pathFoto,
         ]);
-        Alert::success('Berhasil', 'Akun Guru berhasil ditambahkan. Lengkapi data di menu Edit sebagai Tata Usaha!');
+        Alert::success('Berhasil', 'Akun Siswa berhasil ditambahkan. Lengkapi data di menu Edit sebagai Tata Usaha!');
 
         return redirect()->route('siswa.index');
     }

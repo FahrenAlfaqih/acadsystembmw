@@ -36,17 +36,6 @@
                     <p class="text-lg font-medium">{{ $siswa->jenis_kelamin }}</p>
                 </div>
 
-                <div>
-                    <p class="text-sm text-gray-600">No Telepon Orang Tua</p>
-                    <p class="text-lg font-medium">
-                        {{ $siswa->no_telepon }}
-                    </p>
-                    <a href="https://wa.me/{{ '62' . ltrim($siswa->no_telepon, '0') }}?text={{ urlencode('Selamat Pagi/Siang/Sore orangtua siswa ' . $siswa->nama . ', kami dari pihak Tata Usaha SMA Bina Mitra Wahana') }}"
-                        target="_blank"
-                        class="inline-block mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg shadow">
-                        Hubungi via WhatsApp
-                    </a>
-                </div>
 
 
                 <div>
@@ -66,6 +55,19 @@
                         {{ $siswa->status }}
                     </span>
                 </div>
+
+                <div>
+                    <p class="text-sm text-gray-600">No Telepon Orang Tua</p>
+                    <p class="text-lg font-medium">
+                        {{ $siswa->no_telepon }}
+                    </p>
+                    <a href="https://wa.me/{{ '62' . ltrim($siswa->no_telepon, '0') }}?text={{ urlencode('Selamat Pagi/Siang/Sore orangtua siswa ' . $siswa->nama . ', kami dari pihak Tata Usaha SMA Bina Mitra Wahana') }}"
+                        target="_blank"
+                        class="inline-block mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg shadow">
+                        Hubungi via WhatsApp
+                    </a>
+                </div>
+
 
                 <div>
                     <p class="text-sm text-gray-600">Kelas</p>

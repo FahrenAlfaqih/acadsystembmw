@@ -7,7 +7,6 @@ use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Sekolah;
 use App\Models\Siswa;
-use Illuminate\Http\Request;
 
 class TataUsahaController extends Controller
 {

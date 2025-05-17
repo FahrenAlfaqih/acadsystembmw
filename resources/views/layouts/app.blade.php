@@ -120,6 +120,12 @@
                        {{ request()->routeIs('jadwal.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
                         Data Jadwal Mapel
                     </x-nav-link>
+                    <x-nav-link :href="route('rapor.index')"
+                        :active="request()->routeIs('rapor.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       {{ request()->routeIs('rapor.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Cetak Rapor
+                    </x-nav-link>
                     @elseif(auth()->user()->role === 'siswa')
                     <x-nav-link :href="route('nilai.index')"
                         :active="request()->routeIs('nilai.index')"

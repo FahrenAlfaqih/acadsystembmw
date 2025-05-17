@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     JadwalMapelController,
     KenaikanKelasController,
     NilaiController,
+    RaporController,
     SemesterController,
     TataUsahaController
 };
@@ -94,6 +95,12 @@ Route::middleware(['auth', 'role:tatausaha'])->group(function () {
     Route::resource('mapel', MapelController::class)->except(['show']);
     Route::resource('jadwal', JadwalMapelController::class)->except(['show']);
     Route::resource('semester', SemesterController::class);
+
+    Route::get('/rapor', [RaporController::class, 'index'])->name('rapor.index');
+    Route::get('/rapor/preview/{kelas}', [RaporController::class, 'preview'])->name('rapor.preview');
+    Route::get('/rapor/cetak/{kelas}', [RaporController::class, 'cetakPdf'])->name('rapor.cetakPdf');
+    Route::get('/rapor/{kelasId}/siswa/{siswaId}/cetak', [RaporController::class, 'cetakPdfPerSiswa'])->name('rapor.cetak.per_siswa');
+
 });
 
 require __DIR__ . '/auth.php';
