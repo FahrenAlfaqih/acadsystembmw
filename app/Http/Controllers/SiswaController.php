@@ -22,10 +22,25 @@ class SiswaController extends Controller
 
     public function index()
     {
-        $siswa = Siswa::with('user')->get();
+        $user = auth()->user();
+
+        // Jika wali kelas → tampilkan siswa dari kelas yang dia waliki
+        if ($user->role === 'walikelas') {
+            // Ambil semua kelas yang dia waliki
+            $kelasIds = $user->kelasDiwalikan->pluck('id');
+
+            // Ambil siswa dari kelas-kelas tersebut
+            $siswa = Siswa::with('kelas')
+                ->whereIn('id_kelas', $kelasIds)
+                ->get();
+        } else {
+            // Untuk role lain seperti admin/tatausaha tampilkan semua
+            $siswa = Siswa::with('kelas')->get();
+        }
 
         return view('siswa.index', compact('siswa'));
     }
+
 
 
 

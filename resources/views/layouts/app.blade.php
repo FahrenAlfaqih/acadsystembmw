@@ -11,7 +11,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -23,40 +24,23 @@
 <!-- SweetAlert2 JS -->
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-100 flex">
+    <div class="min-h-screen flex">
 
         <!-- Sidebar -->
-        <div class="mt-3 ml-3  mb-3 w-64 bg-white text-black p-4 shadow-md rounded-lg">
+        <aside class="fixed top-0 left-0 h-full w-64 text-black p-4 shadow-md rounded-r-lg overflow-auto">
             <!-- Logo dan Nama Sistem -->
-            <div class="flex items-center mb-6">
-                @php
-                $foto = null;
-                if(auth()->user()->guru) {
-                $foto = auth()->user()->guru->foto;
-                } elseif(auth()->user()->siswa) {
-                $foto = auth()->user()->siswa->foto;
-                } elseif(auth()->user()->kepalaSekolah) {
-                $foto = auth()->user()->kepalaSekolah->foto;
-                }
-                @endphp
-                @if($foto)
-                <img src="{{ asset('storage/foto/' . $foto) }}" alt="Foto Pengguna" class="w-32 h-32 object-cover rounded-full mr-6 border border-gray-300">
-                @else
-                @endif
+            <div class="flex justify-center mb-6 mt-3">
+                <a href="{{ route('dashboard') }}">
+                    <img src="{{ asset('build/assets/img/logo-apps.png') }}" alt="Logo" class="h-14 w-auto">
+                </a>
             </div>
 
-
             <!-- Menu -->
-            <nav class="space-y-4">
-                <!-- Dashboard -->
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
-                    class="w-full px-4 py-2 text-left rounded-md {{ request()->routeIs('dashboard') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+            <nav class="flex flex-col items-center space-y-4">
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="w-full px-4 py-2 text-left rounded-md {{ request()->routeIs('dashboard') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
                     Dashboard
                 </x-nav-link>
-
-
-                <!-- Wrapper menu -->
-                <div class="space-y-2">
+                <div class="space-y-2 ">
                     @if(auth()->user()->role === 'admin')
                     <x-nav-link :href="route('guru.index')"
                         :active="request()->routeIs('guru.index')"
@@ -155,11 +139,12 @@
                     </x-nav-link>
 
                     @if(auth()->user()->guru && auth()->user()->guru->is_wali_kelas == 1)
-                    <x-nav-link :href="route('kenaikan-kelas.index')"
-                        :active="request()->routeIs('kenaikan-kelas.index')"
+
+                    <x-nav-link :href="route('wali-kelas-siswa.index')"
+                        :active="request()->routeIs('wali-kelas-siswa.index')"
                         class="w-full px-4 py-2 text-left rounded-md 
-            {{ request()->routeIs('kenaikan-kelas.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
-                        Data Kenaikan Kelas
+            {{ request()->routeIs('wali-kelas-siswa.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Data Siswa
                     </x-nav-link>
                     <x-nav-link :href="route('wali-kelas-siswaNilai.index')"
                         :active="request()->routeIs('wali-kelas-siswaNilai.index')"
@@ -173,37 +158,48 @@
             {{ request()->routeIs('wali-kelas-siswaPresensi.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
                         Data Presensi Siswa
                     </x-nav-link>
+                    <x-nav-link :href="route('kenaikan-kelas.index')"
+                        :active="request()->routeIs('kenaikan-kelas.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+            {{ request()->routeIs('kenaikan-kelas.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Data Kenaikan Kelas
+                    </x-nav-link>
                     @endif
                     @endif
-
-
-
                 </div>
             </nav>
-        </div>
+        </aside>
 
-        <!-- Konten Utama -->
-        <div class="flex-1 bg-gray-180 p-6">
-            @include('layouts.navigation')
+        <!-- Konten Utama + Header -->
+        <div class="ml-64 flex-1 flex flex-col min-h-screen">
 
-            <!-- Page Heading -->
-            @if (isset($header))
-            <header class="bg-white shadow rounded-lg">
-                <div class="py-6 px-4 sm:px-6 lg:px-8">
+            <!-- Header fixed -->
+            <header class="fixed top-0 left-64 right-0 bg-white shadow p-6 z-30 rounded-b-lg ml-1" >
+                @include('layouts.navigation')
+                @if (isset($header))
+                <div>
                     {{ $header }}
                 </div>
+                @endif
             </header>
-            @endif
 
-            <!-- Page Content -->
-            <main>
+
+            <!-- Spacer supaya konten main tidak tertutup header -->
+            <div class="h-24"></div>
+
+            <!-- Konten utama scrollable -->
+            <main class="flex-1 overflow-auto p-10" style="background-color: #f3f6ff;">
+
                 {{ $slot }}
                 @include('sweetalert::alert')
             </main>
+
             @stack('scripts')
         </div>
 
     </div>
+
+
 
 
     <script>

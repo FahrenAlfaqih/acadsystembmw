@@ -14,6 +14,28 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class KenaikanKelasController extends Controller
 {
+    public function siswaByKelasGuru(Request $request)
+    {
+        $kelasId = auth()->user()->guru->kelas_id;
+        $kelas = Kelas::find($kelasId);
+
+        $query = Siswa::with('kelas')
+            ->where('kelas_id', $kelasId);
+
+        if ($request->has('q') && $request->q != '') {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%$search%")
+                    ->orWhere('nisn', 'like', "%$search%");
+            });
+        }
+
+        $siswa = $query->orderBy('nama', 'asc')->get();
+
+        return view('walikelas.siswa', compact('siswa', 'kelas'));
+    }
+
+
     public function dataNilaiKelas(Request $request)
     {
         $kelasId = auth()->user()->guru->kelas_id;
@@ -83,7 +105,17 @@ class KenaikanKelasController extends Controller
             }
         }])->where('kelas_id', $kelasId);
 
-        $siswa = $query->get();
+        $siswa = $query->orderBy('nama', 'asc')->get();
+
+        foreach ($siswa as $s) {
+            $totalPresensi = $s->presensi->count();
+            $jumlahHadir = $s->presensi->where('status_kehadiran', 'Hadir')->count();
+
+            // Hindari pembagian dengan nol
+            $s->persentase_hadir = $totalPresensi > 0
+                ? round(($jumlahHadir / $totalPresensi) * 100, 2)
+                : 0;
+        }
 
         $mapel = Mapel::all();
 
@@ -91,10 +123,12 @@ class KenaikanKelasController extends Controller
     }
 
     public function formNaikKelas()
-    {
+    {        
+
         $kelasId = auth()->user()->guru->kelas_id;
         $siswa = Siswa::with('kelas')
             ->where('kelas_id', $kelasId)
+            ->orderBy('nama', 'asc')
             ->get();
 
         $kelas = Kelas::all();

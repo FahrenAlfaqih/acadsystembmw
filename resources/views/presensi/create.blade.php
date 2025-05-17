@@ -29,6 +29,7 @@
                         <thead>
                             <tr class="bg-gray-200 text-gray-600">
                                 <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
+                                <th class="py-3 px-4 text-sm font-medium">NISN</th>
                                 <th class="py-3 px-4 text-sm font-medium">Keterangan</th>
                             </tr>
                         </thead>
@@ -36,7 +37,8 @@
                             @foreach ($siswaList as $siswa)
                             <tr class="border-b hover:bg-gray-50 transition duration-300">
                                 <td class="py-3 px-4 text-sm">{{ $siswa->nama }}</td>
-                                <td class="py-3 px-4 text-sm">
+                                <td class="py-3 px-4 text-sm">{{ $siswa->nisn }}</td>
+                                <td class="py-3 px-4 text-sm ">
                                     <input type="hidden" name="siswa_id[]" value="{{ $siswa->id }}">
                                     <div class="flex flex-wrap gap-4">
                                         <label><input type="radio" name="status_kehadiran[{{ $siswa->id }}]" value="Hadir" required> Hadir</label>

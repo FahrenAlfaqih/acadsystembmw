@@ -113,8 +113,9 @@ class GuruController extends Controller
         if ($mapel_id) $query->where('mapel_id', $mapel_id);
         if ($kelas_id) $query->where('kelas_id', $kelas_id);
 
-        $nilaiList = $query->get();
-
+        $nilaiList = $query->get()->sortBy(function ($item) {
+            return $item->siswa->nama ?? '';
+        })->values();
         $semesters = Semester::all();
 
         return view('nilai.index_guru', compact(
@@ -161,8 +162,9 @@ class GuruController extends Controller
 
         $presensiList = $presensiQuery->get();
 
-        // Ambil siswa-siswa di kelas yang dipilih
-        $siswaList = Siswa::where('kelas_id', $kelas_id)->get();
+        $siswaList = Siswa::where('kelas_id', $kelas_id)
+            ->orderBy('nama') 
+            ->get();
 
         // Dapatkan semua pertemuan_ke yang tersedia
         $pertemuanList = $presensiList->pluck('pertemuan_ke')->unique()->sort()->values();

@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('guru', GuruController::class);
     Route::resource('kepalasekolah', KepalaSekolahController::class);
 
+    Route::middleware('role:guru')->get('/wali-kelas/siswa', [KenaikanKelasController::class, 'siswaByKelasGuru'])->name('wali-kelas-siswa.index');
     Route::middleware('role:guru')->get('/wali-kelas/siswa/nilai', [KenaikanKelasController::class, 'dataNilaiKelas'])->name('wali-kelas-siswaNilai.index');
     Route::middleware('role:guru')->get('/wali-kelas/siswa/presensi', [KenaikanKelasController::class, 'dataPresensiKelas'])->name('wali-kelas-siswaPresensi.index');
 

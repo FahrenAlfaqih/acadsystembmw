@@ -77,11 +77,11 @@
                 </div>
             </div>
 
-            <div class="mt-6">
+            <!-- <div class="mt-6">
                 <a href="{{ route('siswa.index') }}" class="inline-block px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow">
                     Kembali ke Daftar Siswa
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 </x-app-layout>

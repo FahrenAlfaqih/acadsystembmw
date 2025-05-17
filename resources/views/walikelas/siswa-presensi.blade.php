@@ -1,8 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Presensi Siswa Kelas {{ $kelas->nama_kelas }}
-        </h2>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Data Presensi Siswa {{$kelas->nama_kelas}}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -27,7 +29,6 @@
         <div class="bg-white p-6 rounded-xl shadow">
 
 
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Daftar Presensi Siswa</h3>
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left border-separate border-spacing-0">
                     <thead class="bg-gray-200 text-gray-600">
@@ -39,6 +40,7 @@
                             <th class="py-3 px-4 text-sm font-medium">Jumlah Izin</th>
                             <th class="py-3 px-4 text-sm font-medium">Jumlah Sakit</th>
                             <th class="py-3 px-4 text-sm font-medium">Jumlah Alpha</th>
+                            <th class="py-3 px-4 text-sm font-medium">Persentase Kehadiran</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,6 +59,7 @@
                             <td class="py-3 px-4 text-sm">{{ $izin }}</td>
                             <td class="py-3 px-4 text-sm">{{ $sakit }}</td>
                             <td class="py-3 px-4 text-sm">{{ $alpha }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $s->persentase_hadir }}%</td>
                         </tr>
                         @empty
                         <tr>

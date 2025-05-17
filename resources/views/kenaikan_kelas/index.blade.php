@@ -54,6 +54,7 @@
                         <table class="w-full table-auto text-left border-separate border-spacing-0">
                             <thead>
                                 <tr class="bg-gray-200 text-gray-600">
+                                    <th class="py-3 px-4 text-sm font-medium">No</th>
                                     <th class="py-3 px-4 text-sm font-medium">Nama</th>
                                     <th class="py-3 px-4 text-sm font-medium">NISN</th>
                                     <th class="py-3 px-4 text-sm font-medium">Kelas Saat Ini</th>
@@ -62,8 +63,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($siswa as $data)
+                                @foreach ($siswa as $key => $data)
                                 <tr class="border-b hover:bg-gray-50 transition duration-300">
+                                    <td class="py-3 px-4 text-sm">{{ $key + 1 }}</td>
                                     <td class="py-3 px-4 text-sm">{{ $data->nama }}</td>
                                     <td class="py-3 px-4 text-sm">{{ $data->nisn }}</td>
                                     <td class="py-3 px-4 text-sm">{{ $data->kelas->nama_kelas ?? '-' }}</td>

@@ -94,7 +94,8 @@
                 <div class="overflow-x-auto mb-4">
                     <table class="w-full table-auto text-left border-separate border-spacing-0">
                         <thead>
-                            <tr class="bg-gray-200 text-gray-600">
+                            <tr class="bg-white text-gray-600">
+                                <th class="py-3 px-4 text-sm font-medium">No</th>
                                 <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
                                 <th class="py-3 px-4 text-sm font-medium">Kelas</th>
                                 <th class="py-3 px-4 text-sm font-medium">Mapel</th>
@@ -103,8 +104,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($groupedPresensi as $presensi)
+                            @foreach ($groupedPresensi as $key =>$presensi)
                             <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="py-3 px-4 text-sm">{{ $key + 1 }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->siswa->nama ?? '-' }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->kelas->nama_kelas ?? '-' }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->mapel->nama_mapel ?? '-' }}</td>
