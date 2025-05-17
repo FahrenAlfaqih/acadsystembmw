@@ -14,7 +14,6 @@
             <h3 class="font-semibold text-lg text-gray-800 mb-4">Filter Nilai</h3>
 
             <form method="GET" class="flex flex-wrap gap-3 sm:gap-4 items-end">
-
                 {{-- Semester --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Semester</label>

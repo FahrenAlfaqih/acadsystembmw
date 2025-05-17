@@ -153,9 +153,11 @@ class GuruController extends Controller
             ->whereIn('mapel_id', $jadwalList->pluck('mapel_id'))
             ->where('guru_id', $guru->id); // Pastikan hanya presensi yang sesuai dengan guru yang ditampilkan
 
+        $pertemuan_ke = $request->get('pertemuan_ke');
         if ($semester_id) $presensiQuery->where('semester_id', $semester_id);
         if ($kelas_id) $presensiQuery->where('kelas_id', $kelas_id);
         if ($mapel_id) $presensiQuery->where('mapel_id', $mapel_id);
+        if ($pertemuan_ke) $presensiQuery->where('pertemuan_ke', $pertemuan_ke);
 
         $presensiList = $presensiQuery->get();
 

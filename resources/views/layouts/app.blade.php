@@ -161,6 +161,18 @@
             {{ request()->routeIs('kenaikan-kelas.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
                         Data Kenaikan Kelas
                     </x-nav-link>
+                    <x-nav-link :href="route('wali-kelas-siswaNilai.index')"
+                        :active="request()->routeIs('wali-kelas-siswaNilai.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+            {{ request()->routeIs('wali-kelas-siswaNilai.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Data Nilai Siswa
+                    </x-nav-link>
+                    <x-nav-link :href="route('wali-kelas-siswaPresensi.index')"
+                        :active="request()->routeIs('wali-kelas-siswaPresensi.index')"
+                        class="w-full px-4 py-2 text-left rounded-md 
+            {{ request()->routeIs('wali-kelas-siswaPresensi.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        Data Presensi Siswa
+                    </x-nav-link>
                     @endif
                     @endif
 

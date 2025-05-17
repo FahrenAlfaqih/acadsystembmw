@@ -59,6 +59,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('guru', GuruController::class);
     Route::resource('kepalasekolah', KepalaSekolahController::class);
 
+    Route::middleware('role:guru')->get('/wali-kelas/siswa/nilai', [KenaikanKelasController::class, 'dataNilaiKelas'])->name('wali-kelas-siswaNilai.index');
+    Route::middleware('role:guru')->get('/wali-kelas/siswa/presensi', [KenaikanKelasController::class, 'dataPresensiKelas'])->name('wali-kelas-siswaPresensi.index');
+
+
 
     Route::prefix('presensi')->group(function () {
         Route::get('/', [PresensiController::class, 'index'])->name('presensi.index');
@@ -100,7 +104,6 @@ Route::middleware(['auth', 'role:tatausaha'])->group(function () {
     Route::get('/rapor/preview/{kelas}', [RaporController::class, 'preview'])->name('rapor.preview');
     Route::get('/rapor/cetak/{kelas}', [RaporController::class, 'cetakPdf'])->name('rapor.cetakPdf');
     Route::get('/rapor/{kelasId}/siswa/{siswaId}/cetak', [RaporController::class, 'cetakPdfPerSiswa'])->name('rapor.cetak.per_siswa');
-
 });
 
 require __DIR__ . '/auth.php';
