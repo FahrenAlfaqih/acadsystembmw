@@ -15,9 +15,19 @@ class RaporController extends Controller
 {
     public function index()
     {
-        $kelas = Kelas::all();
-        return view('rapor.index', compact('kelas'));
+        $user = auth()->user();
+
+        if ($user->role == 'guru') {
+            $kelas = Kelas::where('id', $user->guru->kelas_id)->get();
+            return redirect()->route('rapor.preview', $user->guru->kelas_id);
+        } elseif ($user->role == 'tatausaha') {
+            $kelas = Kelas::all();
+            return view('rapor.index', compact('kelas'));
+        } else {
+            abort(403, 'Unauthorized');
+        }
     }
+
 
     public function preview($kelasId)
     {

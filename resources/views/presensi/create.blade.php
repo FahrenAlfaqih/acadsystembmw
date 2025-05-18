@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-xl">
             <form method="POST" action="{{ route('presensi.store', ['kelas_id' => $kelas_id, 'mapel_id' => $mapel_id, 'semester_id' => $semester_id]) }}">
                 @csrf
 
@@ -27,7 +27,7 @@
                 <div class="overflow-x-auto mt-6">
                     <table class="w-full table-auto text-left border-separate border-spacing-0 mt-4">
                         <thead>
-                            <tr class="bg-gray-200 text-gray-600">
+                            <tr class="bg-white text-gray-600">
                                 <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
                                 <th class="py-3 px-4 text-sm font-medium">NISN</th>
                                 <th class="py-3 px-4 text-sm font-medium">Keterangan</th>

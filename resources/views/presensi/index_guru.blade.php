@@ -7,68 +7,60 @@
         </div>
     </x-slot>
 
-    {{-- Filter Presensi --}}
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6 shadow-md rounded-lg mb-6">
-            <h3 class="font-semibold text-lg text-gray-800 mb-4">Filter Presensi</h3>
-            <form method="GET" class="flex flex-wrap gap-4">
-                {{-- Semester --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Semester</label>
-                    <select name="semester_id" class="text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm">
-                        @foreach ($semesters as $sem)
-                        <option value="{{ $sem->id }}" {{ $sem->id == $semester_id ? 'selected' : '' }}>
-                            Semester {{ $loop->iteration }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{-- Kelas --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
-                    <select name="kelas_id" class="text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm">
-                        <option value="">-- Semua Kelas --</option>
-                        @foreach ($kelasList as $kelas)
-                        <option value="{{ $kelas->id }}" {{ $kelas->id == $kelas_id ? 'selected' : '' }}>
-                            {{ $kelas->nama_kelas }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{-- Mapel --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Mata Pelajaran</label>
-                    <select name="mapel_id" class="text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm">
-                        <option value="">-- Semua Mapel --</option>
-                        @foreach ($mapelList as $mapel)
-                        <option value="{{ $mapel->id }}" {{ $mapel->id == $mapel_id ? 'selected' : '' }}>
-                            {{ $mapel->nama_mapel }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{-- Tombol Filter --}}
-                <div class="flex items-end">
-                    <button type="submit"
-                        class="text-sm px-4 py-2 border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition">
-                        <i class="fas fa-filter mr-1"></i> Filter
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        {{-- Data Presensi --}}
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-2xl">
             @if ($presensiList->isEmpty())
             <p class="text-gray-500">Data presensi tidak tersedia.</p>
             @else
+            <div class="flex flex-wrap sm:flex-nowrap justify-between items-end mb-4">
+                <h3 class="font-semibold text-lg text-gray-800 mb-4">Presensi Siswa</h3>
+                <form method="GET" class="flex flex-wrap gap-4">
+                    {{-- Semester --}}
+                    <div>
+                        <select name="semester_id" class="text-sm px-3 py-2 border border-gray-300 rounded-2xl bg-gray-300 text-black font-medium  shadow-sm">
+                            @foreach ($semesters as $sem)
+                            <option value="{{ $sem->id }}" {{ $sem->id == $semester_id ? 'selected' : '' }}>
+                                Semester {{ $loop->iteration }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-            {{-- Filter Pertemuan --}}
-            <div class="mb-4">
-                <h4 class="font-semibold text-gray-700 mb-2">Filter Pertemuan:</h4>
+                    {{-- Kelas --}}
+                    <div>
+                        <select name="kelas_id" class="text-sm px-3 py-2 border border-gray-300 rounded-2xl bg-gray-300 text-black font-medium  shadow-sm">
+                            <option value="">-- Kelas --</option>
+                            @foreach ($kelasList as $kelas)
+                            <option value="{{ $kelas->id }}" {{ $kelas->id == $kelas_id ? 'selected' : '' }}>
+                                {{ $kelas->nama_kelas }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Mapel --}}
+                    <div>
+                        <select name="mapel_id" class="text-sm px-3 py-2 border border-gray-300 rounded-2xl bg-gray-300 text-black font-medium  shadow-sm">
+                            <option value="">-- Mata Pelajaran --</option>
+                            @foreach ($mapelList as $mapel)
+                            <option value="{{ $mapel->id }}" {{ $mapel->id == $mapel_id ? 'selected' : '' }}>
+                                {{ $mapel->nama_mapel }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Tombol Filter --}}
+                    <div class="flex items-end">
+                        <button type="submit"
+                            class="text-sm px-4 py-2 border border-blue-500 text-blue-600 rounded-2xl hover:bg-blue-50 transition">
+                            <i class="fas fa-filter mr-1"></i> Filter
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="overflow-x-auto">
                 <div class="flex flex-wrap gap-2">
                     @php $pertemuanAktif = request()->get('pertemuan_ke'); @endphp
                     @foreach ($presensiList->pluck('pertemuan_ke')->unique()->sort() as $pertemuanKe)

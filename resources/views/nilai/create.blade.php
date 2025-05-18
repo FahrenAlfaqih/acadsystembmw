@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-xl">
             <form method="POST" action="{{ route('nilai.store', ['kelas_id' => $kelas_id, 'mapel_id' => $mapel_id, 'semester_id' => $semester_id]) }}">
                 @csrf
 

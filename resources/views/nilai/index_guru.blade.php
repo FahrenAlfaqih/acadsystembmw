@@ -8,11 +8,6 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-        <!-- <div class="bg-white p-6 shadow-md rounded-2xl mb-6">
-        </div> -->
-
-        {{-- Tabel Nilai --}}
         <div class="bg-white p-6 shadow-md rounded-2xl">
             @if ($nilaiList->isEmpty())
             <p class="text-gray-500">Data nilai tidak tersedia.</p>

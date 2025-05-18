@@ -11,10 +11,12 @@
         <div class="bg-white p-6 shadow-md rounded-xl">
             {{-- Container tombol dengan flex --}}
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-3 sm:space-y-0">
+                @if(auth()->user()->role === 'tatausaha')
                 <a href="{{ route('rapor.index') }}"
                     class="inline-block px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
                     Kembali ke daftar kelas
                 </a>
+                @endif
 
                 <a href="{{ route('rapor.cetakPdf', $kelas->id) }}" target="_blank"
                     class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">

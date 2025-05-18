@@ -8,39 +8,25 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6 shadow-md rounded-lg mb-6">
-            <h3 class="font-semibold text-lg text-gray-800 mb-4">Cari Siswa</h3>
-            <form method="GET" class="flex space-x-2 max-w-md">
-                <input
-                    type="text"
-                    name="q"
-                    value="{{ request('q') }}"
-                    placeholder="Cari berdasarkan nama atau NISN..."
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <div class="bg-white p-6 shadow-md rounded-2xl">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
 
-                <button type="submit"
-                    class="text-sm px-4 py-2 border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition flex items-center">
-                    <i class="fas fa-search mr-1"></i> Cari
-                </button>
-
-                <a href="{{ route('wali-kelas-siswa.index') }}"
-                    class="text-sm px-4 py-2 border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition flex items-center">
-                    <i class="fas fa-rotate-right mr-1"></i> Reload
-                </a>
-            </form>
-        </div>
-
-
-
-        <div class="bg-white p-6 shadow-md rounded-lg">
-            @if($siswa->isEmpty())
-            <p class="text-gray-500">Tidak ada siswa di kelas ini.</p>
-            @else
-
+                @if($siswa->isEmpty())
+                <p class="text-gray-500">Tidak ada siswa di kelas ini.</p>
+                @else
+                <h3 class="font-semibold text-lg text-gray-800 mb-4">Detail Siswa</h3>
+                <div class="mb-4">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Cari siswa..."
+                        class="w-full sm:w-64 h-10 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                </div>
+            </div>
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left border-separate border-spacing-0 mt-4">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600">
+                        <tr class="bg-white text-gray-600">
                             <th class="py-3 px-4 text-sm font-medium">No</th>
                             <th class="py-3 px-4 text-sm font-medium">Nama</th>
                             <th class="py-3 px-4 text-sm font-medium">Email</th>
@@ -72,7 +58,7 @@
                             </td>
                             <td class="py-3 px-4 text-sm space-x-2">
                                 <a href="{{ route('siswa.show', $s->id) }}" class="inline-block text-sm text-blue-600 hover:underline">
-                                    Detail
+                                    <i class="fa-solid fa-circle-info"></i>
                                 </a>
                             </td>
                         </tr>
@@ -83,4 +69,22 @@
             @endif
         </div>
     </div>
+    @push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("searchInput");
+            const tableRows = document.querySelectorAll("tbody tr");
+
+            searchInput.addEventListener("keyup", function() {
+                const searchTerm = this.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? "" : "none";
+                });
+            });
+        });
+    </script>
+    @endpush
+
 </x-app-layout>

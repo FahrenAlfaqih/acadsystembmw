@@ -9,29 +9,34 @@
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-        <div class="bg-white p-6 shadow-md rounded-lg mb-6">
-            <h3 class="font-semibold text-lg text-gray-800 mb-4">Filter Nilai</h3>
-            {{-- Form Filter Mapel --}}
-            <form method="GET" class="mb-6 max-w-sm">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Filter Berdasarkan Mapel</label>
-                <select name="mapel_id"
-                    onchange="this.form.submit()"
-                    class="w-full text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm">
-                    <option value="">-- Semua Mapel --</option>
-                    @foreach ($mapel as $m)
-                    <option value="{{ $m->id }}" {{ request('mapel_id') == $m->id ? 'selected' : '' }}>
-                        {{ $m->nama_mapel }}
-                    </option>
-                    @endforeach
-                </select>
-            </form>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow">
-
+        <div class="bg-white p-6 rounded-2xl shadow">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                <h3 class="font-semibold text-lg text-gray-800">Nilai Siswa</h3>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <form method="GET">
+                        <select name="mapel_id"
+                            onchange="this.form.submit()"
+                            class="w-full text-sm px-3 py-2 border border-gray-300 rounded-2xl shadow-sm bg-gray-300 font-medium text-black">
+                            <option value="">-- Mata Pelajaran --</option>
+                            @foreach ($mapel as $m)
+                            <option value="{{ $m->id }}" {{ request('mapel_id') == $m->id ? 'selected' : '' }}>
+                                {{ $m->nama_mapel }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </form>
+                    <!-- Search Input -->
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Cari siswa..."
+                        class="w-full sm:w-64 h-10 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                </div>
+            </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left border-separate border-spacing-0">
-                    <thead class="bg-gray-200 text-gray-600">
+                    <thead class="bg-white text-gray-600">
                         <tr>
                             <th class="py-3 px-4 text-sm font-medium">No</th>
                             <th class="py-3 px-4 text-sm font-medium">Nama</th>
@@ -59,7 +64,7 @@
                             <td class="py-3 px-4 text-sm">{{ $izin }}</td>
                             <td class="py-3 px-4 text-sm">{{ $sakit }}</td>
                             <td class="py-3 px-4 text-sm">{{ $alpha }}</td>
-                            <td class="py-3 px-4 text-sm">{{ $s->persentase_hadir }}%</td>
+                            <td class="py-3 px-4 text-sm font-semibold text-blue-600">{{ $s->persentase_hadir }}%</td>
                         </tr>
                         @empty
                         <tr>
@@ -71,4 +76,21 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("searchInput");
+            const tableRows = document.querySelectorAll("tbody tr");
+
+            searchInput.addEventListener("keyup", function() {
+                const searchTerm = this.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? "" : "none";
+                });
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>

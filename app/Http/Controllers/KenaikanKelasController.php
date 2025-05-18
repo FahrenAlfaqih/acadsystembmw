@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JadwalMapel;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
@@ -99,6 +100,13 @@ class KenaikanKelasController extends Controller
         $kelas = Kelas::find($kelasId);
         $mapelId = $request->input('mapel_id');
 
+        $mapel = JadwalMapel::where('kelas_id', $kelasId)
+            ->with('mapel')
+            ->get()
+            ->pluck('mapel')
+            ->unique('id')
+            ->values();
+
         $query = Siswa::with(['presensi' => function ($q) use ($mapelId) {
             if ($mapelId) {
                 $q->where('mapel_id', $mapelId);
@@ -111,21 +119,27 @@ class KenaikanKelasController extends Controller
             $totalPresensi = $s->presensi->count();
             $jumlahHadir = $s->presensi->where('status_kehadiran', 'Hadir')->count();
 
-            // Hindari pembagian dengan nol
             $s->persentase_hadir = $totalPresensi > 0
                 ? round(($jumlahHadir / $totalPresensi) * 100, 2)
                 : 0;
         }
 
-        $mapel = Mapel::all();
-
         return view('walikelas.siswa-presensi', compact('siswa', 'mapel', 'kelas', 'mapelId'));
     }
 
+
+
     public function formNaikKelas()
-    {        
+    {
+        $semesterAktif = Semester::latest()->first();
+
+        if ($semesterAktif->tipe !== 'Genap') {
+            Alert::warning('Peringatan', 'Kenaikan Kelas hanya bisa diakses ketika semester Genap Aktif!');
+            return redirect()->back();
+        }
 
         $kelasId = auth()->user()->guru->kelas_id;
+
         $siswa = Siswa::with('kelas')
             ->where('kelas_id', $kelasId)
             ->orderBy('nama', 'asc')
@@ -137,7 +151,6 @@ class KenaikanKelasController extends Controller
         $tahunAjaran = Semester::where('tipe', 'Genap')
             ->distinct()
             ->pluck('tahun_ajaran');
-        $semesterAktif = Semester::latest()->first();
 
         return view('kenaikan_kelas.index', compact('siswa', 'kelas', 'kelasSaatIni', 'tahunAjaran'));
     }

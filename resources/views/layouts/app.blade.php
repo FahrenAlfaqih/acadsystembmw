@@ -170,6 +170,13 @@
                         class="w-full px-4 py-2 text-left rounded-md ->r">
                         Data Presensi Siswa
                     </x-nav-link>
+                    <x-nav-link :href="route('rapor.index')"
+                        :active="request()->routeIs('rapor.index')"
+                        icon="fa-solid fa-book"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       ">
+                        Cetak Rapor
+                    </x-nav-link>
                     <x-nav-link :href="route('kenaikan-kelas.index')"
                         :active="request()->routeIs('kenaikan-kelas.index')"
                         icon="fa-solid fa-arrow-trend-up"
