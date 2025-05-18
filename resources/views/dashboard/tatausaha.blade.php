@@ -13,7 +13,7 @@
                         <h3 class="text-sm text-gray-500">Total Guru</h3>
                         <p class="text-2xl font-bold">{{ $totalGuru }}</p>
                     </div>
-                    <div class="text-blue-500">
+                    <div class="text-indigo-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -28,7 +28,7 @@
                         <h3 class="text-sm text-gray-500">Total Siswa</h3>
                         <p class="text-2xl font-bold">{{ $totalSiswa }}</p>
                     </div>
-                    <div class="text-green-500">
+                    <div class="text-indigo-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,7 +43,7 @@
                         <h3 class="text-sm text-gray-500">Total Mapel</h3>
                         <p class="text-2xl font-bold">{{ $totalMapel }}</p>
                     </div>
-                    <div class="text-yellow-500">
+                    <div class="text-indigo-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -60,7 +60,7 @@
                         <h3 class="text-sm text-gray-500">Total Kelas</h3>
                         <p class="text-2xl font-bold">{{ $totalKelas }}</p>
                     </div>
-                    <div class="text-purple-500">
+                    <div class="text-indigo-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="ro    und" stroke-width="2"
@@ -103,8 +103,8 @@
                                 label: 'Jumlah Guru',
                                 data: dataGuru,
                                 backgroundColor: [
-                                    '#42a5f5', // Biru agak gelap
-                                    '#6a1b9a' // Ungu tua
+                                    '#68d1ff', // Biru untuk laki-laki
+                                    '#4319f9' // Ungu untuk perempuan
                                 ]
                             }]
                         },
@@ -161,8 +161,8 @@
                                 label: 'Jumlah Siswa',
                                 data: dataSiswa,
                                 backgroundColor: [
-                                    '#42a5f5', // Biru untuk laki-laki
-                                    '#6a1b9a' // Ungu untuk perempuan
+                                    '#68d1ff', // Biru untuk laki-laki
+                                    '#4319f9' // Ungu untuk perempuan
                                 ]
                             }]
                         },

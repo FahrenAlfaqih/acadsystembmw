@@ -24,7 +24,8 @@
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left border-separate border-spacing-0 mt-4">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600">
+                        <tr class="bg-white text-gray-600">
+                            <th class="py-3 px-4 text-sm font-medium">No</th>
                             <th class="py-3 px-4 text-sm font-medium">Nama</th>
                             <th class="py-3 px-4 text-sm font-medium">Email</th>
                             <th class="py-3 px-4 text-sm font-medium">NIP</th>
@@ -38,8 +39,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kepalasekolah as $data)
+                        @foreach ($kepalasekolah as $key => $data)
                         <tr class="border-b hover:bg-gray-50 transition duration-300">
+                            <td class="py-3 px-4 text-sm">{{ $key+1 }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nama }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->email }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nip }}</td>
@@ -54,10 +56,10 @@
                             </td>
                             <td class="py-3 px-4 text-sm space-x-2">
                                 <a href="{{ route('kepalasekolah.show', $data->id) }}" class="inline-block text-sm text-blue-600 hover:underline">
-                                    Detail
+                                    <i class="fa-solid fa-circle-info"></i>
                                 </a>
                                 <a href="{{ route('kepalasekolah.edit', $data->id) }}" class="inline-block text-sm text-yellow-600 hover:underline">
-                                    Edit
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
                             @endif

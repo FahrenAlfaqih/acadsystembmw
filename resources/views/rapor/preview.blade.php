@@ -23,31 +23,33 @@
             </div>
 
             @if($siswa->isEmpty())
-                <p class="text-gray-500">Tidak ada siswa di kelas ini.</p>
+            <p class="text-gray-500">Tidak ada siswa di kelas ini.</p>
             @else
-                <div class="overflow-x-auto">
-                    <table class="w-full table-auto text-left border-collapse border border-gray-300">
-                        <thead>
-                            <tr class="bg-gray-200 text-gray-600">
-                                <th class="border border-gray-300 py-3 px-4 text-sm font-medium">Nama Siswa</th>
-                                <th class="border border-gray-300 py-3 px-4 text-sm font-medium">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($siswa as $item)
-                            <tr class="border-b border-gray-300 hover:bg-gray-50 transition duration-300">
-                                <td class="border border-gray-300 py-3 px-4 text-sm">{{ $item->nama }}</td>
-                                <td class="border border-gray-300 py-3 px-4 text-sm space-x-2">
-                                    <a href="{{ route('rapor.cetak.per_siswa', [$kelas->id, $item->id]) }}" target="_blank"
-                                        class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
-                                        Cetak Rapor Siswa
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto text-left border-separate border-spacing-0 mt-4">
+                    <thead>
+                        <tr class="bg-white text-gray-600">
+                            <th class="py-3 px-4 text-sm font-medium">No</th>
+                            <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
+                            <th class="py-3 px-4 text-sm font-medium">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($siswa as $key => $item)
+                        <tr class="border-b hover:bg-gray-50 transition duration-300">
+                            <td class="py-3 px-4 text-sm">{{ $key+1 }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $item->nama }}</td>
+                            <td class="py-3 px-4 text-sm">
+                                <a href="{{ route('rapor.cetak.per_siswa', [$kelas->id, $item->id]) }}" target="_blank"
+                                    class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                                    <i class="fa-solid fa-print"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             @endif
         </div>
     </div>

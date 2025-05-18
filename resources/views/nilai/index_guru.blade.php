@@ -18,13 +18,14 @@
             <p class="text-gray-500">Data nilai tidak tersedia.</p>
             @else
             <div class="flex flex-wrap sm:flex-nowrap justify-between items-end mb-4">
-                <h3 class="font-semibold text-lg text-gray-800 mb-4">Nilai Siswa</h3>
+                <h3 class="font-bold text-lg text-gray-800 mb-4">Nilai Siswa</h3>
 
                 <form method="GET" class="flex flex-wrap gap-3 sm:gap-4 items-end">
                     {{-- Semester --}}
                     <div>
                         <select name="semester_id"
-                            class="text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 transition hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="text-sm px-3 py-2 border border-gray-300 rounded-2xl shadow-sm bg-gray-300 text-black font-medium transition hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Semester --</option>
                             @foreach ($semesters as $sem)
                             <option value="{{ $sem->id }}" {{ $sem->id == $semester_id ? 'selected' : '' }}>
                                 Semester {{ $loop->iteration }}
@@ -36,8 +37,8 @@
                     {{-- Kelas --}}
                     <div>
                         <select name="kelas_id"
-                            class="text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 transition hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">-- Semua Kelas --</option>
+                            class="text-sm px-3 py-2 border border-gray-300 rounded-2xl shadow-sm bg-gray-300 text-black transition font-medium hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Kelas --</option>
                             @foreach ($kelasList as $kelas)
                             <option value="{{ $kelas->id }}" {{ $kelas->id == $kelas_id ? 'selected' : '' }}>
                                 {{ $kelas->nama_kelas }}
@@ -49,8 +50,8 @@
                     {{-- Mapel --}}
                     <div>
                         <select name="mapel_id"
-                            class="text-sm px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 transition hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">-- Semua Mapel --</option>
+                            class="text-sm px-3 py-2 border border-gray-300 rounded-2xl shadow-sm bg-gray-300 text-black transition font-medium hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Mata Pelajaran --</option>
                             @foreach ($mapelList as $mapel)
                             <option value="{{ $mapel->id }}" {{ $mapel->id == $mapel_id ? 'selected' : '' }}>
                                 {{ $mapel->nama_mapel }}
@@ -62,7 +63,7 @@
                     {{-- Tombol Filter --}}
                     <div>
                         <button type="submit"
-                            class="mt-5 text-sm px-4 py-2 border border-blue-500 text-blue-600 rounded-lg shadow-sm transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            class="mt-5 text-sm px-4 py-2 border border-blue-500 text-blue-600 rounded-2xl shadow-sm transition hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
                             <i class="fas fa-filter mr-1"></i> Filter
                         </button>
                     </div>

@@ -37,7 +37,10 @@
 
             <!-- Menu -->
             <nav class="flex flex-col items-center space-y-4">
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="w-full px-4 py-2 text-left rounded-md {{ request()->routeIs('dashboard') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                <x-nav-link :href="route('dashboard')"
+                    :active="request()->routeIs('dashboard')"
+                    icon="fa-solid fa-house"
+                    class="w-full px-4 py-2 text-left rounded-md">
                     Dashboard
                 </x-nav-link>
                 <div class="space-y-2 ">
@@ -45,96 +48,104 @@
                     <x-nav-link :href="route('guru.index')"
                         :active="request()->routeIs('guru.index')"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('guru.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Tambah Pengguna Guru
                     </x-nav-link>
                     <x-nav-link :href="route('siswa.index')"
                         :active="request()->routeIs('siswa.index')"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('siswa.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Tambah Pengguna Siswa
                     </x-nav-link>
                     <x-nav-link :href="route('kepalasekolah.index')"
                         :active="request()->routeIs('kepalasekolah.index')"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('kepalasekolah.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Tambah Pengguna Kepala Sekolah
                     </x-nav-link>
 
                     @elseif(auth()->user()->role === 'tatausaha')
-                    <x-nav-link :href="route('guru.index')"
-                        :active="request()->routeIs('guru.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('guru.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
-                        Data Guru
-                    </x-nav-link>
                     <x-nav-link :href="route('siswa.index')"
                         :active="request()->routeIs('siswa.index')"
+                        icon="fa-solid fa-user"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('siswa.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Data Siswa
                     </x-nav-link>
+                    <x-nav-link :href="route('guru.index')"
+                        :active="request()->routeIs('guru.index')"
+                        icon="fa-solid fa-user"
+                        class="w-full px-4 py-2 text-left rounded-md ">
+                        Data Guru
+                    </x-nav-link>
+
                     <x-nav-link :href="route('kepalasekolah.index')"
                         :active="request()->routeIs('kepalasekolah.index')"
+                        icon="fa-solid fa-user"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('kepalasekolah.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                      ">
                         Data Kepala Sekolah
                     </x-nav-link>
                     <x-nav-link :href="route('semester.index')"
                         :active="request()->routeIs('semester.index')"
+                        icon="fa-solid fa-chart-simple"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('semester.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Data Semester
                     </x-nav-link>
                     <x-nav-link :href="route('mapel.index')"
                         :active="request()->routeIs('mapel.index')"
+                        icon="fa-solid fa-chart-simple"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('mapel.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Data Mata Pelajaran
                     </x-nav-link>
                     <x-nav-link :href="route('kelas.index')"
                         :active="request()->routeIs('kelas.index')"
+                        icon="fa-solid fa-chart-simple"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('kelas.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Data Kelas
                     </x-nav-link>
                     <x-nav-link :href="route('jadwal.index')"
                         :active="request()->routeIs('jadwal.index')"
+                        icon="fa-solid fa-calendar"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('jadwal.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Data Jadwal Mapel
                     </x-nav-link>
                     <x-nav-link :href="route('rapor.index')"
                         :active="request()->routeIs('rapor.index')"
+                        icon="fa-solid fa-book"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('rapor.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                       ">
                         Cetak Rapor
                     </x-nav-link>
                     @elseif(auth()->user()->role === 'siswa')
                     <x-nav-link :href="route('nilai.index')"
                         :active="request()->routeIs('nilai.index')"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('nilai.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+        ">
                         Data Nilai
                     </x-nav-link>
                     <x-nav-link :href="route('presensi.index')"
                         :active="request()->routeIs('presensi.index')"
                         class="w-full px-4 py-2 text-left rounded-md 
-                       {{ request()->routeIs('presensi.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                    ">
                         Data Presensi
                     </x-nav-link>
                     @elseif(auth()->user()->role === 'guru')
                     <x-nav-link :href="route('nilai.guru.index')"
                         :active="request()->routeIs('nilai.guru.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-       {{ request()->routeIs('nilai.guru.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md">
                         Data Nilai
                     </x-nav-link>
 
                     <x-nav-link :href="route('presensi.guru.index')"
                         :active="request()->routeIs('presensi.guru.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-       {{ request()->routeIs('presensi.guru.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md">
                         Data Presensi
                     </x-nav-link>
 
@@ -142,26 +153,28 @@
 
                     <x-nav-link :href="route('wali-kelas-siswa.index')"
                         :active="request()->routeIs('wali-kelas-siswa.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-            {{ request()->routeIs('wali-kelas-siswa.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        icon="fa-solid fa-user"
+                        class="w-full px-4 py-2 text-left rounded-md">
                         Data Siswa
                     </x-nav-link>
                     <x-nav-link :href="route('wali-kelas-siswaNilai.index')"
                         :active="request()->routeIs('wali-kelas-siswaNilai.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-            {{ request()->routeIs('wali-kelas-siswaNilai.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        icon="fa-solid fa-chart-simple"
+
+                        class="w-full px-4 py-2 text-left rounded-md ">
                         Data Nilai Siswa
                     </x-nav-link>
                     <x-nav-link :href="route('wali-kelas-siswaPresensi.index')"
                         :active="request()->routeIs('wali-kelas-siswaPresensi.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-            {{ request()->routeIs('wali-kelas-siswaPresensi.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md ->r">
                         Data Presensi Siswa
                     </x-nav-link>
                     <x-nav-link :href="route('kenaikan-kelas.index')"
                         :active="request()->routeIs('kenaikan-kelas.index')"
+                        icon="fa-solid fa-arrow-trend-up"
                         class="w-full px-4 py-2 text-left rounded-md 
-            {{ request()->routeIs('kenaikan-kelas.index') ? 'bg-blue-500 text-white' : 'text-gray-700' }}">
+            {{ re">
                         Data Kenaikan Kelas
                     </x-nav-link>
                     @endif
@@ -174,7 +187,7 @@
         <div class="ml-64 flex-1 flex flex-col min-h-screen">
 
             <!-- Header fixed -->
-            <header class="fixed top-0 left-64 right-0 bg-white shadow p-6 z-30 rounded-b-lg ml-1" >
+            <header class="fixed top-0 left-64 right-0  p-6 z-30  " style="background-color: #f3f6ff;">
                 @include('layouts.navigation')
                 @if (isset($header))
                 <div>
@@ -185,17 +198,18 @@
 
 
             <!-- Spacer supaya konten main tidak tertutup header -->
-            <div class="h-24"></div>
+            <div class=" h-24">
+                </div>
 
-            <!-- Konten utama scrollable -->
-            <main class="flex-1 overflow-auto p-10" style="background-color: #f3f6ff;">
+                <!-- Konten utama scrollable -->
+                <main class="flex-1 overflow-auto p-10" style="background-color: #f3f6ff;">
 
-                {{ $slot }}
-                @include('sweetalert::alert')
-            </main>
+                    {{ $slot }}
+                    @include('sweetalert::alert')
+                </main>
 
-            @stack('scripts')
-        </div>
+                @stack('scripts')
+    </div>
 
     </div>
 

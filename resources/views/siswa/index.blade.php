@@ -11,8 +11,16 @@
         <div class="bg-white p-6 shadow-md rounded-lg">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                 <h3 class="font-semibold text-lg text-gray-800">
-                    Daftar Siswa
+                    Detail Siswa
                 </h3>
+                <div class="mb-4">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Cari siswa..."
+                        class="w-full sm:w-64 h-10 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                </div>
+
                 @if(auth()->user()->role === 'admin')
                 <a href="{{ route('siswa.create') }}" class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">Tambah Siswa</a>
                 @endif
@@ -25,7 +33,8 @@
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left border-separate border-spacing-0 mt-4">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600">
+                        <tr class="bg-white text-gray-600">
+                            <th class="py-3 px-4 text-sm font-medium">No</th>
                             <th class="py-3 px-4 text-sm font-medium">Nama</th>
                             <th class="py-3 px-4 text-sm font-medium">Email</th>
                             <th class="py-3 px-4 text-sm font-medium">NISN</th>
@@ -42,8 +51,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($siswa as $data)
+                        @foreach ($siswa as $key => $data)
                         <tr class="border-b hover:bg-gray-50 transition duration-300">
+                            <td class="py-3 px-4 text-sm">{{ $key+1 }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nama }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->email }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nisn }}</td>
@@ -63,10 +73,11 @@
                             </td>
                             <td class="py-3 px-4 text-sm space-x-2">
                                 <a href="{{ route('siswa.show', $data->id) }}" class="inline-block text-sm text-blue-600 hover:underline">
-                                    Detail
+                                    <i class="fa-solid fa-circle-info"></i>
+
                                 </a>
                                 <a href="{{ route('siswa.edit', $data->id) }}" class="inline-block text-sm text-yellow-600 hover:underline">
-                                    Edit
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
                             @endif
@@ -78,4 +89,22 @@
             @endif
         </div>
     </div>
+    @push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("searchInput");
+            const tableRows = document.querySelectorAll("tbody tr");
+
+            searchInput.addEventListener("keyup", function() {
+                const searchTerm = this.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? "" : "none";
+                });
+            });
+        });
+    </script>
+    @endpush
+
 </x-app-layout>

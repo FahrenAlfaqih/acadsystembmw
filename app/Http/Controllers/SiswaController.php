@@ -35,7 +35,7 @@ class SiswaController extends Controller
                 ->get();
         } else {
             // Untuk role lain seperti admin/tatausaha tampilkan semua
-            $siswa = Siswa::with('kelas')->get();
+            $siswa = Siswa::with('kelas')->orderBy('nama', 'asc')->get();
         }
 
         return view('siswa.index', compact('siswa'));

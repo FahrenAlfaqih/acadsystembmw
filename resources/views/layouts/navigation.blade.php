@@ -1,18 +1,15 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100"> <!-- Primary Navigation Menu -->
+<nav x-data="{ open: false }" class="border-b border-gray-100" style="background-color: #f3f6ff;"> <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('build/assets/img/logo.png') }}" alt="Logo" class="h-9 w-auto">
                     </a>
                 </div>
-
-                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <p class="mt-2 text-gray-500">SMA Bina Mitra Wahana</p>
+                        <p class="mt-2 font-semibold text-gray-500" style="color: #7bb9d0;">SMA Bina Mitra Wahana</p>
 
                         <!-- @if(auth()->user()->role === 'tatausaha')
                         {{ __('Dashboard Tata Usaha') }}
@@ -27,16 +24,15 @@
                         @endif -->
                     </x-nav-link>
                 </div>
-
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Profile Dropdown with Integrated Search -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
+                <x-dropdown align="right" width="64">
                     <x-slot name="trigger">
                         @php
                         $foto = null;
-                        $role = Auth::user()->role; // atau sesuaikan sesuai struktur role kamu
+                        $role = Auth::user()->role;
 
                         if(auth()->user()->guru) {
                         $foto = auth()->user()->guru->foto;
@@ -47,19 +43,35 @@
                         }
                         @endphp
 
-                        <button class="text-left flex items-center px-3 py-2 border border-transparent rounded-md text-sm leading-4 font-medium text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition duration-150">
-                            @if($foto)
-                            <img src="{{ asset('storage/foto/' . $foto) }}" alt="Foto Pengguna" class="w-10 h-10 rounded-full object-cover border border-gray-300 me-3">
-                            @else
-                            <div class="w-10 h-10 rounded-full bg-gray-200 me-3"></div>
-                            @endif
-
-                            <div class="flex flex-col justify-end">
-                                <div>{{ Auth::user()->name }}</div>
-                                <div class="text-xs text-gray-400">{{ ucfirst($role) }}</div>
+                        <button class="flex items-center gap-3 px-4 py-2 bg-white border border-gray-300 rounded-full text-sm text-gray-700 hover:bg-gray-200 transition duration-150">
+                            <!-- Search Field -->
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Cari..."
+                                    style="background-color: #f3f6ff;"
+                                    class="w-60  h-10 px-3 py-1 ps-8 border border-gray-300 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                <svg class="absolute left-2 top-3 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-4.35-4.35M16 10a6 6 0 11-12 0 6 6 0 0112 0z" />
+                                </svg>
                             </div>
-                        </button>
 
+
+                            <!-- Info User -->
+                            <div class="flex flex-col items-start">
+                                <span class="font-semibold">{{ Auth::user()->name }}</span>
+                                <span class="text-xs text-gray-500">{{ ucfirst($role) }}</span>
+                            </div>
+
+                            <!-- Foto -->
+                            @if($foto)
+                            <img src="{{ asset('storage/foto/' . $foto) }}" alt="Foto Pengguna" class="w-9 h-9 rounded-full object-cover border border-gray-300">
+                            @else
+                            <div class="w-9 h-9 rounded-full bg-gray-200"></div>
+                            @endif
+                        </button>
                     </x-slot>
 
                     <x-slot name="content">
@@ -67,7 +79,6 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
@@ -78,6 +89,9 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
+
+
 
 
 
