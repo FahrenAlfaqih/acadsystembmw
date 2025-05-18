@@ -23,8 +23,8 @@ class MapelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_mapel' => 'required|string|max:255|unique:mapels',
-            'nama_mapel' => 'required|string|max:255',
+            'kode_mapel' => 'required|string|max:255|unique:mapels,kode_mapel',
+            'nama_mapel' => 'required|string|max:255|unique:mapels,nama_mapel',
         ]);
 
         Mapel::create($request->all());
@@ -33,13 +33,15 @@ class MapelController extends Controller
         return redirect()->route('mapel.index');
     }
 
-    public function edit(Mapel $mapel)
+    public function edit($id)
     {
+        $mapel = Mapel::findOrFail($id);
         return view('mapel.update', compact('mapel'));
     }
 
-    public function update(Request $request, Mapel $mapel)
+    public function update(Request $request, $id)
     {
+        $mapel = Mapel::findOrFail($id);
         $request->validate([
             'kode_mapel' => 'required|string|max:255|unique:mapels,kode_mapel,' . $mapel->id,
             'nama_mapel' => 'required|string|max:255',

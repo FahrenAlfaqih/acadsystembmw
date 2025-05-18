@@ -33,7 +33,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left border-separate border-spacing-0 mt-4">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-600">
+                        <tr class="bg-white text-gray-600">
                             <th class="py-3 px-4 text-sm font-medium">Mata Pelajaran</th>
                             <th class="py-3 px-4 text-sm font-medium">Nilai Harian</th>
                             <th class="py-3 px-4 text-sm font-medium">UTS</th>

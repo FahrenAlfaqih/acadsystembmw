@@ -9,7 +9,7 @@
 
     <div class="py-6 max-w-5xl mx-auto sm:px-6 lg:px-8">
 
-        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <div class="bg-white shadow-md rounded-2xl p-6 mb-6">
             <div class="flex items-center">
                 <img src="{{ asset('storage/foto/' . $siswa->foto) }}" alt="Foto Siswa" class="w-32 h-32 object-cover rounded-full mr-6 border border-gray-300">
                 <div>
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-2xl p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                 <div>
                     <p class="text-sm text-gray-600">NISN</p>
@@ -45,8 +45,42 @@
 
                 <div>
                     <p class="text-sm text-gray-600">Nama Orang Tua</p>
-                    <p class="text-lg font-medium">{{ $siswa->orangtua }}</p>
+                    <p class="text-lg font-medium">{{ optional($siswa->orangtuaUser)->name ?? '-' }}</p>
                 </div>
+
+                <div>
+                    <p class="text-sm text-gray-600">Email Orangtua</p>
+                    <p class="text-lg font-medium">{{ optional($siswa->orangtuaUser)->email ?? '-' }}</p>
+                </div>
+
+
+                <div>
+                    <p class="text-sm text-gray-600">No Telepon Orang Tua</p>
+                    <p class="text-lg font-medium">
+                        {{ $siswa->no_telepon }}
+                    </p>
+                    @if(auth()->user()->role === 'tatausaha')
+                    <a href="https://wa.me/{{ '62' . ltrim($siswa->no_telepon, '0') }}?text={{ urlencode('Selamat Pagi/Siang/Sore orangtua siswa ' . $siswa->nama . ', kami dari pihak Tata Usaha SMA Bina Mitra Wahana') }}"
+                        target="_blank"
+                        class="inline-block mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg shadow">
+                        Hubungi via WhatsApp
+                    </a>
+                    @elseif(auth()->user()->guru && auth()->user()->guru->is_wali_kelas == 1)
+                    <a href="https://wa.me/{{ '62' . ltrim($siswa->no_telepon, '0') }}?text={{ urlencode('Selamat Pagi/Siang/Sore orangtua siswa ' . $siswa->nama . ', saya  ' . auth()->user()->name . ' ' . auth()->user()->role . ' sekaligus wali kelas dari ' . $siswa->nama) }}"
+                        target="_blank"
+                        class="inline-block mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg shadow">
+                        Hubungi via WhatsApp
+                    </a>
+                    @elseif(auth()->user()->role === 'guru')
+                    <a href="https://wa.me/{{ '62' . ltrim($siswa->no_telepon, '0') }}?text={{ urlencode('Selamat Pagi/Siang/Sore orangtua siswa ' . $siswa->nama . ', saya  ' . auth()->user()->name . ' ' . auth()->user()->role . ' dari ' . $siswa->nama) }}"
+                        target="_blank"
+                        class="inline-block mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg shadow">
+                        Hubungi via WhatsApp
+                    </a>
+
+                    @endif
+                </div>
+
 
                 <div>
                     <p class="text-sm text-gray-600">Status</p>
@@ -54,18 +88,6 @@
                         {{ $siswa->status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                         {{ $siswa->status }}
                     </span>
-                </div>
-
-                <div>
-                    <p class="text-sm text-gray-600">No Telepon Orang Tua</p>
-                    <p class="text-lg font-medium">
-                        {{ $siswa->no_telepon }}
-                    </p>
-                    <a href="https://wa.me/{{ '62' . ltrim($siswa->no_telepon, '0') }}?text={{ urlencode('Selamat Pagi/Siang/Sore orangtua siswa ' . $siswa->nama . ', kami dari pihak Tata Usaha SMA Bina Mitra Wahana') }}"
-                        target="_blank"
-                        class="inline-block mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg shadow">
-                        Hubungi via WhatsApp
-                    </a>
                 </div>
 
 

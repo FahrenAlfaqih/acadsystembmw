@@ -9,9 +9,11 @@
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-col items-end justify-end mb-2">
+            @if(auth()->user()->role === 'tatausaha')
             <a href="{{ route('kelas.create') }}" class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">Tambah Kelas</a>
+            @endif
         </div>
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-2xl">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                 <h3 class="font-semibold text-lg text-gray-800">
                     Daftar Kelas
@@ -37,7 +39,10 @@
                             <th class="py-3 px-4 text-sm font-medium">Nama Kelas</th>
                             <th class="py-3 px-4 text-sm font-medium">Tingkatan</th>
                             <th class="py-3 px-4 text-sm font-medium">Wali Kelas</th>
+                            @if(auth()->user()->role === 'tatausaha')
                             <th class="py-3 px-4 text-sm font-medium">Aksi</th>
+                            @endif
+
                         </tr>
                     </thead>
                     <tbody>
@@ -50,7 +55,9 @@
                                 {{ $k->waliKelas ? $k->waliKelas->nama : 'Tidak ada wali kelas' }}
                             </td>
                             <td class="py-3 px-4 text-sm">
+                                @if(auth()->user()->role === 'tatausaha')
                                 <a href="{{ route('kelas.edit', $k->id) }}" class="text-yellow-600 hover:text-blue-700"><i class="fa-solid fa-pen-to-square"></i></a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-2xl">
             <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -70,11 +70,14 @@
                             :value="old('kelas_id', $siswa->kelas_id)" />
                     </div>
 
-                    <!-- Orang Tua -->
                     <div>
-                        <x-input label="Orang Tua" name="orangtua" :value="old('orangtua', $siswa->orangtua)" />
+                        <x-input
+                        name="orangtuaa"
+                            label="Nama Orang Tua"
+                            :value="$siswa->orangtuaUser->name ?? '-'"
+                            readonly />
                     </div>
-
+                    <input type="hidden" name="orangtua" value="{{ $siswa->orangtuaUser->id ?? '' }}">
                     <!-- Foto -->
                     <div>
                         @if($siswa->foto)

@@ -9,7 +9,7 @@
 
     <div class="py-6 max-w-5xl mx-auto sm:px-6 lg:px-8">
 
-        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <div class="bg-white shadow-md rounded-2xl p-6 mb-6">
             <div class="flex items-center">
                 <img src="{{ asset('storage/foto/' . $guru->foto) }}" alt="Foto Guru" class="w-32 h-32 object-cover rounded-full mr-6 border border-gray-300">
                 <div>
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-2xl p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                 <div>
                     <p class="text-sm text-gray-600">NIP</p>

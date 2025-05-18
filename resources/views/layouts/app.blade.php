@@ -14,6 +14,8 @@
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -47,24 +49,30 @@
                     @if(auth()->user()->role === 'admin')
                     <x-nav-link :href="route('guru.index')"
                         :active="request()->routeIs('guru.index')"
+                        icon="fa-solid fa-user"
                         class="w-full px-4 py-2 text-left rounded-md 
                        ">
                         Tambah Pengguna Guru
                     </x-nav-link>
                     <x-nav-link :href="route('siswa.index')"
                         :active="request()->routeIs('siswa.index')"
+                        icon="fa-solid fa-user"
                         class="w-full px-4 py-2 text-left rounded-md 
                        ">
                         Tambah Pengguna Siswa
                     </x-nav-link>
                     <x-nav-link :href="route('kepalasekolah.index')"
                         :active="request()->routeIs('kepalasekolah.index')"
+                        icon="fa-solid fa-user"
                         class="w-full px-4 py-2 text-left rounded-md 
                        ">
                         Tambah Pengguna Kepala Sekolah
                     </x-nav-link>
 
                     @elseif(auth()->user()->role === 'tatausaha')
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Manajemen Pengguna
+                    </a>
                     <x-nav-link :href="route('siswa.index')"
                         :active="request()->routeIs('siswa.index')"
                         icon="fa-solid fa-user"
@@ -86,6 +94,9 @@
                       ">
                         Data Kepala Sekolah
                     </x-nav-link>
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Manajemen Akademik
+                    </a>
                     <x-nav-link :href="route('semester.index')"
                         :active="request()->routeIs('semester.index')"
                         icon="fa-solid fa-chart-simple"
@@ -107,6 +118,9 @@
                        ">
                         Data Kelas
                     </x-nav-link>
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Master Penjadwalan
+                    </a>
                     <x-nav-link :href="route('jadwal.index')"
                         :active="request()->routeIs('jadwal.index')"
                         icon="fa-solid fa-calendar"
@@ -121,21 +135,72 @@
                        ">
                         Cetak Rapor
                     </x-nav-link>
+                    @elseif(auth()->user()->role === 'kepalasekolah')
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Master Pengguna
+                    </a>
+                    <x-nav-link :href="route('siswa.index')"
+                        :active="request()->routeIs('siswa.index')"
+                        icon="fa-solid fa-user"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       ">
+                        Data Siswa
+                    </x-nav-link>
+                    <x-nav-link :href="route('guru.index')"
+                        :active="request()->routeIs('guru.index')"
+                        icon="fa-solid fa-user"
+                        class="w-full px-4 py-2 text-left rounded-md ">
+                        Data Guru
+                    </x-nav-link>
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Master Akademik
+                    </a>
+                    <x-nav-link :href="route('mapel.index')"
+                        :active="request()->routeIs('mapel.index')"
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       ">
+                        Data Mata Pelajaran
+                    </x-nav-link>
+                    <x-nav-link :href="route('kelas.index')"
+                        :active="request()->routeIs('kelas.index')"
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       ">
+                        Data Kelas
+                    </x-nav-link>
+                    <x-nav-link :href="route('jadwal.index')"
+                        :active="request()->routeIs('jadwal.index')"
+                        icon="fa-solid fa-calendar"
+                        class="w-full px-4 py-2 text-left rounded-md 
+                       ">
+                        Data Jadwal Mapel
+                    </x-nav-link>
+
                     @elseif(auth()->user()->role === 'siswa')
+                    <x-nav-link :href="route('jadwal-siswa.index')"
+                        :active="request()->routeIs('jadwal-siswa.index')"
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md ">
+                        Jadwal Mata Pelajaran
+                    </x-nav-link>
                     <x-nav-link :href="route('nilai.index')"
                         :active="request()->routeIs('nilai.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-        ">
+                        icon="fa-solid fa-chart-simple"
+                        class="w-full px-4 py-2 text-left rounded-md ">
                         Data Nilai
                     </x-nav-link>
                     <x-nav-link :href="route('presensi.index')"
                         :active="request()->routeIs('presensi.index')"
-                        class="w-full px-4 py-2 text-left rounded-md 
-                    ">
+                        class="w-full px-4 py-2 text-left rounded-md"
+                        icon=" fa-solid fa-chart-simple">
                         Data Presensi
                     </x-nav-link>
                     @elseif(auth()->user()->role === 'guru')
-                    <x-nav-link :href="route('nilai.guru.index')"
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Menu Guru
+                    </a>
+                    <x-nav-link :href=" route('nilai.guru.index')"
                         :active="request()->routeIs('nilai.guru.index')"
                         icon="fa-solid fa-chart-simple"
                         class="w-full px-4 py-2 text-left rounded-md">
@@ -150,7 +215,9 @@
                     </x-nav-link>
 
                     @if(auth()->user()->guru && auth()->user()->guru->is_wali_kelas == 1)
-
+                    <a class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 cursor-default select-none">
+                        Menu Wali Kelas
+                    </a>
                     <x-nav-link :href="route('wali-kelas-siswa.index')"
                         :active="request()->routeIs('wali-kelas-siswa.index')"
                         icon="fa-solid fa-user"

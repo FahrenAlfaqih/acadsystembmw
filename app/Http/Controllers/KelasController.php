@@ -22,10 +22,13 @@ class KelasController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_kelas' => 'required|string|max:255',
-            'tingkatan' => 'required|string|max:255',
-        ]);
+        $request->validate(
+            [
+                'nama_kelas' => 'required|string|max:255|unique:kelas,nama_kelas',
+                'tingkatan' => 'required|string|max:255',
+            ]
+        );
+
 
         Kelas::create($request->all());
 
@@ -43,10 +46,13 @@ class KelasController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama_kelas' => 'required|string|max:255',
-            'tingkatan' => 'required|string|max:255',
-        ]);
+        $request->validate(
+            [
+                'nama_kelas' => 'required|string|max:255|unique:kelas,nama_kelas,' . $id,
+                'tingkatan' => 'required|string|max:255',
+            ],
+        );
+
 
         $kelas = Kelas::findOrFail($id);
 

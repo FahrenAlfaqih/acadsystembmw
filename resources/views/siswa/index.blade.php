@@ -8,11 +8,12 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-2xl">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                 <h3 class="font-semibold text-lg text-gray-800">
                     Detail Siswa
                 </h3>
+                @if(auth()->user()->role === 'tatausaha' || auth()->user()->role === 'kepalasekolah')
                 <div class="mb-4">
                     <input
                         type="text"
@@ -20,7 +21,7 @@
                         placeholder="Cari siswa..."
                         class="w-full sm:w-64 h-10 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
                 </div>
-
+                @endif
                 @if(auth()->user()->role === 'admin')
                 <a href="{{ route('siswa.create') }}" class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">Tambah Siswa</a>
                 @endif
@@ -39,7 +40,7 @@
                             <th class="py-3 px-4 text-sm font-medium">Email</th>
                             <th class="py-3 px-4 text-sm font-medium">NISN</th>
 
-                            @if(auth()->user()->role === 'tatausaha')
+                            @if(auth()->user()->role === 'tatausaha' || auth()->user()->role === 'kepalasekolah')
                             <th class="py-3 px-4 text-sm font-medium">Kelas</th>
                             <th class="py-3 px-4 text-sm font-medium">Alamat</th>
                             <th class="py-3 px-4 text-sm font-medium">No Telepon</th>
@@ -52,19 +53,22 @@
                     </thead>
                     <tbody>
                         @foreach ($siswa as $key => $data)
+
                         <tr class="border-b hover:bg-gray-50 transition duration-300">
                             <td class="py-3 px-4 text-sm">{{ $key+1 }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nama }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->email }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->nisn }}</td>
 
-                            @if(auth()->user()->role === 'tatausaha')
+                            @if(auth()->user()->role === 'tatausaha' || auth()->user()->role === 'kepalasekolah')
                             <td class="py-3 px-4 text-sm">
                                 {{ $data->kelas ? $data->kelas->nama_kelas : 'Kelas Tidak Ditemukan' }}
                             </td>
                             <td class="py-3 px-4 text-sm">{{ $data->alamat }}</td>
                             <td class="py-3 px-4 text-sm">{{ $data->no_telepon }}</td>
-                            <td class="py-3 px-4 text-sm">{{ $data->orangtua }}</td>
+                            <td class="py-3 px-4 text-sm">
+                                {{ optional($data->orangtuaUser)->name ?? '-' }}
+                            </td>
                             <td class="py-3 px-4 text-sm">
                                 <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full 
                                     {{ $data->status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
@@ -74,11 +78,13 @@
                             <td class="py-3 px-4 text-sm space-x-2">
                                 <a href="{{ route('siswa.show', $data->id) }}" class="inline-block text-sm text-blue-600 hover:underline">
                                     <i class="fa-solid fa-circle-info"></i>
-
                                 </a>
+
+                                @if(auth()->user()->role === 'tatausaha')
                                 <a href="{{ route('siswa.edit', $data->id) }}" class="inline-block text-sm text-yellow-600 hover:underline">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
+                                @endif
                             </td>
                             @endif
                         </tr>

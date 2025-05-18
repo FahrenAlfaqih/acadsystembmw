@@ -9,7 +9,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <p class="mt-2 font-semibold text-gray-500" style="color: #7bb9d0;">SMA Bina Mitra Wahana</p>
+                        <p class="mt-2 font-semibold text-gray-500 text-lg" style="color: #00BFFF;">SMA Bina Mitra Wahana</p>
 
                         <!-- @if(auth()->user()->role === 'tatausaha')
                         {{ __('Dashboard Tata Usaha') }}

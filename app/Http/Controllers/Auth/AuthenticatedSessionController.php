@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        Alert::success('Berhasil', trans('auth.login.success'));
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -45,6 +45,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        Alert::success('Berhasil', trans('auth.login.logout'));
         return redirect('/login');
     }
 }

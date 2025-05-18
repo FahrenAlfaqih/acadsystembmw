@@ -62,27 +62,40 @@
 
             <div class="overflow-x-auto">
                 <div class="flex flex-wrap gap-2">
-                    @php $pertemuanAktif = request()->get('pertemuan_ke'); @endphp
+                    @php
+                    $pertemuanAktif = request()->get('pertemuan_ke');
+                    $tanggalPertemuan = $presensiList->groupBy('pertemuan_ke')->map(function($group) {
+                    return $group->first()->tanggal;
+                    });
+                    @endphp
+
                     @foreach ($presensiList->pluck('pertemuan_ke')->unique()->sort() as $pertemuanKe)
+                    @php
+                    $tanggal = $tanggalPertemuan[$pertemuanKe] ?? null;
+                    $formattedTanggal = $tanggal ? \Carbon\Carbon::parse($tanggal)->format('d M Y') : '-';
+                    @endphp
                     <a href="{{ request()->fullUrlWithQuery(['pertemuan_ke' => $pertemuanKe]) }}"
-                        class="text-sm px-3 py-1.5 border rounded-lg transition
-                            {{ $pertemuanAktif == $pertemuanKe ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-blue-100' }}">
-                        Pertemuan {{ $pertemuanKe }}
+                        class="text-sm px-3 py-1.5 border rounded-2xl transition
+            {{ $pertemuanAktif == $pertemuanKe ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-blue-100' }}">
+                        P{{ $pertemuanKe }} - {{ $formattedTanggal }}
                     </a>
                     @endforeach
+
+
                     <a href="{{ request()->url() }}"
-                        class="text-sm px-3 py-1.5 border rounded-lg transition
-                            {{ is_null($pertemuanAktif) ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-blue-100' }}">
+                        class="text-sm px-3 py-1.5 border rounded-2xl transition
+                {{ is_null($pertemuanAktif) ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-blue-100' }}">
                         Tampilkan Semua
                     </a>
                 </div>
             </div>
 
+
             {{-- Tabel Data --}}
             @foreach ($presensiList->groupBy('pertemuan_ke') as $pertemuanKe => $groupedPresensi)
-            <div class="presensi-group" data-pertemuan="{{ $pertemuanKe }}">
-                <!-- <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-2">Pertemuan Ke-{{ $pertemuanKe }}</h3> -->
-
+            {{-- Cek jika filter aktif dan pertemuan ini bukan yang dipilih, maka sembunyikan --}}
+            <div class="presensi-group" data-pertemuan="{{ $pertemuanKe }}"
+                style="{{ $pertemuanAktif && $pertemuanAktif != $pertemuanKe ? 'display:none;' : '' }}">
                 <div class="overflow-x-auto mb-4">
                     <table class="w-full table-auto text-left border-separate border-spacing-0">
                         <thead>
@@ -91,18 +104,16 @@
                                 <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
                                 <th class="py-3 px-4 text-sm font-medium">Kelas</th>
                                 <th class="py-3 px-4 text-sm font-medium">Mapel</th>
-                                <th class="py-3 px-4 text-sm font-medium">Tanggal</th>
                                 <th class="py-3 px-4 text-sm font-medium">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($groupedPresensi as $key =>$presensi)
+                            @foreach ($groupedPresensi as $key => $presensi)
                             <tr class="border-b hover:bg-gray-50 transition">
                                 <td class="py-3 px-4 text-sm">{{ $key + 1 }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->siswa->nama ?? '-' }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->kelas->nama_kelas ?? '-' }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->mapel->nama_mapel ?? '-' }}</td>
-                                <td class="py-3 px-4 text-sm">{{ $presensi->tanggal ?? '-' }}</td>
                                 <td class="py-3 px-4 text-sm">{{ $presensi->status_kehadiran ?? '-' }}</td>
                             </tr>
                             @endforeach
@@ -114,28 +125,4 @@
             @endif
         </div>
     </div>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.filter-btn');
-            const presensiGroups = document.querySelectorAll('.presensi-group');
-
-            buttons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.getAttribute('data-pertemuan');
-
-                    presensiGroups.forEach(group => {
-                        const groupPertemuan = group.getAttribute('data-pertemuan');
-
-                        if (filter === 'all' || filter === groupPertemuan) {
-                            group.style.display = '';
-                        } else {
-                            group.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        });
-    </script>
 </x-app-layout>

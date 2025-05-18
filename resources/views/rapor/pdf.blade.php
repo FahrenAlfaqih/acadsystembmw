@@ -122,7 +122,7 @@
     </table>
 
     {{-- Tabel presensi --}}
-    <div class="section-title">Presensi</div>
+    <!-- <div class="section-title">Presensi</div>
     <table class="presensi-table">
         <thead>
             <tr>
@@ -141,7 +141,7 @@
             </tr>
             @endforeach
         </tbody>
-    </table>
+    </table> -->
 
     {{-- Tabel ringkasan absensi --}}
     <div class="section-title">Ringkasan Absensi</div>

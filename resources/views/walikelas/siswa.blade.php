@@ -49,7 +49,7 @@
                             <td class="py-3 px-4 text-sm">{{ $s->kelas->nama_kelas ?? '-' }}</td>
                             <td class="py-3 px-4 text-sm">{{ $s->alamat }}</td>
                             <td class="py-3 px-4 text-sm">{{ $s->no_telepon }}</td>
-                            <td class="py-3 px-4 text-sm">{{ $s->orangtua }}</td>
+                            <td class="py-3 px-4 text-sm">{{ optional($s->orangtuaUser)->name ?? '-'  }}</td>
                             <td class="py-3 px-4 text-sm">
                                 <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full 
                                     {{ $s->status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">

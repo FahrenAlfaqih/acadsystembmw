@@ -20,7 +20,7 @@ class KenaikanKelasController extends Controller
         $kelasId = auth()->user()->guru->kelas_id;
         $kelas = Kelas::find($kelasId);
 
-        $query = Siswa::with('kelas')
+        $query = Siswa::with('kelas', 'orangtuaUser')
             ->where('kelas_id', $kelasId);
 
         if ($request->has('q') && $request->q != '') {
@@ -32,6 +32,7 @@ class KenaikanKelasController extends Controller
         }
 
         $siswa = $query->orderBy('nama', 'asc')->get();
+
 
         return view('walikelas.siswa', compact('siswa', 'kelas'));
     }

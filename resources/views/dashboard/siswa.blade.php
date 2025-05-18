@@ -1,10 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                SMA Bina Mitra Wahana
-            </h2>
-        </div>
+
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -24,8 +20,8 @@
                     <!-- Pie Chart -->
                     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 transition duration-300 hover:shadow-xl">
                         <h3 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">🥧 Distribusi Nilai</h3>
-                        <div class="w-full h-[250px]">
-                            <canvas id="pieChart" class="w-full h-full"></canvas>
+                        <div class="w-full h-[250px] flex justify-center items-center">
+                            <canvas id="pieChart" class="max-w-[250px] max-h-[250px]"></canvas>
                         </div>
                     </div>
                 </div>

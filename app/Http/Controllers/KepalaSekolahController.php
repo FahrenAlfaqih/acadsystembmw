@@ -6,6 +6,8 @@ use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\KepalaSekolah;
 use App\Models\Mapel;
+use App\Models\Nilai;
+use App\Models\Presensi;
 use App\Models\Sekolah;
 use App\Models\Siswa;
 use App\Models\User;
@@ -76,22 +78,6 @@ class KepalaSekolahController extends Controller
         return redirect()->route('kepalasekolah.index');
     }
 
-    public function dashboard()
-    {
-        $sekolah = Sekolah::first();
-        $totalGuru = Guru::count();
-        $totalSiswa = Siswa::count();
-        $totalMapel = Mapel::count();
-        $totalKelas = Kelas::count();
-
-        return view('dashboard.kepalasekolah', compact(
-            'totalGuru',
-            'totalSiswa',
-            'totalMapel',
-            'totalKelas',
-            'sekolah'
-        ));
-    }
 
     /**
      * Display the specified resource.
@@ -161,5 +147,63 @@ class KepalaSekolahController extends Controller
     public function destroy(KepalaSekolah $kepalaSekolah)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        $sekolah = Sekolah::first();
+        $totalGuru = Guru::count();
+        $totalSiswa = Siswa::count();
+        $totalMapel = Mapel::count();
+        $totalKelas = Kelas::count();
+
+        $jumlahGuruLaki = Guru::where('jenis_kelamin', 'Laki-laki')->count();
+        $jumlahGuruPerempuan = Guru::where('jenis_kelamin', 'Perempuan')->count();
+        $jumlahSiswaLaki = Siswa::where('jenis_kelamin', 'Laki-laki')->count();
+        $jumlahSiswaPerempuan = Siswa::where('jenis_kelamin', 'Perempuan')->count();
+
+        $nilaiPerSemester = Nilai::selectRaw('semester_id, AVG(rata_rata) as rata_rata')
+            ->groupBy('semester_id')
+            ->with('semester')
+            ->get();
+
+        $presensiPerSemester = Presensi::selectRaw("semester_id, COUNT(*) as total_hadir")
+            ->where('status_kehadiran', 'Hadir')
+            ->groupBy('semester_id')
+            ->with('semester')
+            ->get();
+
+        $semesterLabels = [];
+        $nilaiRataRata = [];
+        $jumlahPresensi = [];
+
+        foreach ($nilaiPerSemester as $nilai) {
+            $semesterLabels[] = $nilai->semester->nama ?? 'Semester ' . $nilai->semester_id;
+            $nilaiRataRata[] = round($nilai->rata_rata, 2);
+        }
+
+        foreach ($presensiPerSemester as $presensi) {
+            if (!in_array($presensi->semester->nama, $semesterLabels)) {
+                $semesterLabels[] = $presensi->semester->nama ?? 'Semester ' . $presensi->semester_id;
+            }
+            $jumlahPresensi[] = $presensi->total_hadir;
+        }
+
+        return view('dashboard.kepalasekolah', compact(
+            'totalGuru',
+            'totalSiswa',
+            'totalMapel',
+            'totalKelas',
+            'sekolah',
+            'jumlahGuruLaki',
+            'jumlahGuruPerempuan',
+            'jumlahSiswaLaki',
+            'jumlahSiswaPerempuan',
+            'nilaiPerSemester',
+            'presensiPerSemester',
+            'semesterLabels',
+            'nilaiRataRata',
+            'jumlahPresensi'
+        ));
     }
 }

@@ -34,7 +34,6 @@ class PresensiController extends Controller
 
 
     public function store(Request $request, $kelas_id, $mapel_id, $semester_id)
-
     {
         $request->validate([
             'tanggal' => 'required|date',
@@ -43,7 +42,30 @@ class PresensiController extends Controller
             'siswa_id' => 'required|array',
         ]);
 
-        foreach ($request->siswa_id as $key => $siswa_id) {
+        // Cek apakah pertemuan_ke sudah ada
+        $cekPertemuan = Presensi::where('kelas_id', $kelas_id)
+            ->where('mapel_id', $mapel_id)
+            ->where('semester_id', $semester_id)
+            ->where('pertemuan_ke', $request->pertemuan_ke)
+            ->exists();
+
+        if ($cekPertemuan) {
+            Alert::error('Gagal', 'Pertemuan ke-' . $request->pertemuan_ke . ' sudah tercatat.');
+            return redirect()->back()->withInput();
+        }
+
+        $cekTanggal = Presensi::where('kelas_id', $kelas_id)
+            ->where('mapel_id', $mapel_id)
+            ->where('semester_id', $semester_id)
+            ->whereDate('tanggal', $request->tanggal)
+            ->exists();
+
+        if ($cekTanggal) {
+            Alert::error('Gagal', 'Tanggal ' . $request->tanggal . ' sudah digunakan untuk presensi.');
+            return redirect()->back()->withInput();
+        }
+
+        foreach ($request->siswa_id as $siswa_id) {
             $status = $request->status_kehadiran[$siswa_id] ?? null;
             Presensi::create([
                 'siswa_id' => $siswa_id,
@@ -56,21 +78,22 @@ class PresensiController extends Controller
                 'pertemuan_ke' => $request->pertemuan_ke,
             ]);
         }
-        Alert::success('Berhasil', 'Data Presensi berhasil disimpan!');
 
+        Alert::success('Berhasil', 'Data presensi berhasil disimpan!');
         return redirect()->route('guru.dashboard');
     }
+
 
 
     public function rekapKelas($kelas_id, $semester_id, $mapel_id)
     {
         $guruId = auth()->user()->guru->id;
-    
+
         $kelas    = Kelas::findOrFail($kelas_id);
-        $mapel    = Mapel::findOrFail($mapel_id); 
+        $mapel    = Mapel::findOrFail($mapel_id);
         $semester = Semester::findOrFail($semester_id);
         $siswaList = Siswa::where('kelas_id', $kelas_id)->get();
-    
+
         $presensiData = Presensi::where('kelas_id', $kelas_id)
             ->where('guru_id', $guruId)
             ->where('semester_id', $semester_id)
@@ -78,9 +101,8 @@ class PresensiController extends Controller
             ->orderBy('pertemuan_ke')
             ->get()
             ->groupBy('pertemuan_ke');
-    
+
 
         return view('presensi.rekap-kelas', compact('kelas', 'mapel', 'siswaList', 'presensiData', 'semester_id', 'semester'));
     }
-    
 }

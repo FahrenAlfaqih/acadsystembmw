@@ -24,18 +24,13 @@ class SiswaController extends Controller
     {
         $user = auth()->user();
 
-        // Jika wali kelas → tampilkan siswa dari kelas yang dia waliki
         if ($user->role === 'walikelas') {
-            // Ambil semua kelas yang dia waliki
             $kelasIds = $user->kelasDiwalikan->pluck('id');
-
-            // Ambil siswa dari kelas-kelas tersebut
-            $siswa = Siswa::with('kelas')
+            $siswa = Siswa::with('kelas', 'orangtua')
                 ->whereIn('id_kelas', $kelasIds)
                 ->get();
         } else {
-            // Untuk role lain seperti admin/tatausaha tampilkan semua
-            $siswa = Siswa::with('kelas')->orderBy('nama', 'asc')->get();
+            $siswa = Siswa::with('kelas', 'orangtuaUser')->orderBy('nama', 'asc')->get();
         }
 
         return view('siswa.index', compact('siswa'));
@@ -59,13 +54,32 @@ class SiswaController extends Controller
             'nisn' => 'required|unique:siswa,nisn',
         ]);
 
-        // Simpan ke users
-        $user = User::create([
+        // Generate email orangtua dari email siswa
+        $prefix = strstr($request->email, '@', true); // ambil bagian sebelum @
+        $emailOrangtua = $prefix . '@orangtua.com';
+
+        // Cek agar email orangtua tidak bentrok di tabel users
+        if (User::where('email', $emailOrangtua)->exists()) {
+            return back()->withErrors(['email' => 'Email orangtua otomatis sudah digunakan. Ganti email siswa.'])->withInput();
+        }
+
+        // Buat akun siswa
+        $userSiswa = User::create([
             'name' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'siswa',
         ]);
+
+        // Buat akun orangtua
+        $userOrangtua = User::create([
+            'name' => $request->nama_orangtua,
+            'email' => $emailOrangtua,
+            'password' => Hash::make($request->password),
+            'role' => 'orangtua',
+        ]);
+
+        // Cek & simpan foto jika ada
         $pathFoto = null;
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
@@ -73,8 +87,9 @@ class SiswaController extends Controller
             $pathFoto = $foto->storeAs('foto_pengguna', $namaFile, 'public');
         }
 
+        // Simpan data siswa
         Siswa::create([
-            'user_id' => $user->id,
+            'user_id' => $userSiswa->id,
             'kelas_id' => null,
             'nisn' => $request->nisn,
             'nama' => $request->nama,
@@ -84,28 +99,29 @@ class SiswaController extends Controller
             'no_telepon' => null,
             'email' => $request->email,
             'status' => 'Aktif',
-            'orangtua' => null,
+            'orangtua' => $userOrangtua->id,
             'foto' => $pathFoto,
         ]);
-        Alert::success('Berhasil', 'Akun Siswa berhasil ditambahkan. Lengkapi data di menu Edit sebagai Tata Usaha!');
 
+        Alert::success('Berhasil', 'Akun Siswa dan Orangtua berhasil ditambahkan.');
         return redirect()->route('siswa.index');
     }
+
+
 
     public function dashboardSiswa()
     {
         $siswa = Siswa::where('user_id', Auth::id())->first();
+
         $kelas_id = $siswa->kelas_id;
 
-        // Ambil mapel yang memang diajarkan di kelas siswa
         $jadwalMapelIds = JadwalMapel::where('kelas_id', $kelas_id)
             ->pluck('mapel_id')
             ->toArray();
 
-        // Filter daftar mapel yang sesuai
+
         $mapelList = Mapel::whereIn('id', $jadwalMapelIds)->get();
 
-        // =================== PRESENSI ====================
         $pertemuanList = Presensi::where('siswa_id', $siswa->id)
             ->whereIn('mapel_id', $jadwalMapelIds)
             ->select('pertemuan_ke')
@@ -138,7 +154,6 @@ class SiswaController extends Controller
             $kehadiranPersen[$mapel->id] = $totalPertemuan > 0 ? round(($totalHadir / $totalPertemuan) * 100, 2) : 0;
         }
 
-        // =================== NILAI ====================
         $nilaiList = Nilai::with('mapel')
             ->where('siswa_id', $siswa->id)
             ->whereIn('mapel_id', $jadwalMapelIds)
@@ -216,6 +231,12 @@ class SiswaController extends Controller
             ->sort()
             ->values();
 
+        $tanggalPertemuan = $presensiData
+            ->groupBy('pertemuan_ke')
+            ->map(function ($group) {
+                return $group->first()->tanggal;
+            });
+
         $presensiMap = [];
         foreach ($presensiData as $presensi) {
             $presensiMap[$presensi->mapel_id][$presensi->pertemuan_ke] = $presensi->status_kehadiran;
@@ -245,7 +266,8 @@ class SiswaController extends Controller
             'presensiMap',
             'kehadiranPersen',
             'semesters',
-            'semester_id'
+            'semester_id',
+            'tanggalPertemuan'
         ));
     }
 

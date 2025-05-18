@@ -12,7 +12,7 @@
             <a href="{{ route('semester.create') }}"
                 class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">Tambah Semester</a>
         </div>
-        <div class="bg-white p-6 shadow-md rounded-lg">
+        <div class="bg-white p-6 shadow-md rounded-2xl">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                 <h3 class="font-semibold text-lg text-gray-800">
                     Daftar Semester

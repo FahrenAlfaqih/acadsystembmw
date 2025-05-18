@@ -18,6 +18,7 @@ use App\Models\Siswa;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
+
 class GuruController extends Controller
 {
     public function index()
@@ -158,12 +159,16 @@ class GuruController extends Controller
         if ($semester_id) $presensiQuery->where('semester_id', $semester_id);
         if ($kelas_id) $presensiQuery->where('kelas_id', $kelas_id);
         if ($mapel_id) $presensiQuery->where('mapel_id', $mapel_id);
-        if ($pertemuan_ke) $presensiQuery->where('pertemuan_ke', $pertemuan_ke);
 
+
+        $query = Presensi::with(['siswa', 'kelas', 'mapel']);
+        if ($request->has('pertemuan_ke') && $request->pertemuan_ke != null) {
+            $query->where('pertemuan_ke', $request->pertemuan_ke);
+        }
         $presensiList = $presensiQuery->get();
 
         $siswaList = Siswa::where('kelas_id', $kelas_id)
-            ->orderBy('nama') 
+            ->orderBy('nama')
             ->get();
 
         // Dapatkan semua pertemuan_ke yang tersedia

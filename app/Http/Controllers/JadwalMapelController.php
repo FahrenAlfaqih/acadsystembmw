@@ -7,8 +7,10 @@ use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Guru;
 use App\Models\Semester;
+use App\Models\Siswa;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalMapelController extends Controller
 {
@@ -27,6 +29,34 @@ class JadwalMapelController extends Controller
         $jadwalPerSemester = collect([$semesterAktif->nama => $jadwal]);
 
         return view('jadwal.index', compact('jadwalPerSemester', 'semesterAktif'));
+    }
+
+    public function indexJadwalSiswa()
+    {
+        $user = Auth::user();
+        $siswa = Siswa::where('user_id', $user->id)->first();
+
+        if (!$siswa) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+
+        $semesterAktif = Semester::where('is_aktif', 1)->first();
+
+        if (!$semesterAktif) {
+            return view('jadwal.index-siswa', ['jadwal' => collect(), 'kelasSiswa' => $siswa->kelas]);
+        }
+
+        $jadwal = JadwalMapel::with(['mapel', 'guru'])
+            ->where('kelas_id', $siswa->kelas_id)
+            ->where('semester_id', $semesterAktif->id)
+            ->orderBy('hari')
+            ->orderBy('jam_mulai')
+            ->get();
+
+        return view('jadwal.index-siswa', [
+            'jadwal' => $jadwal,
+            'kelasSiswa' => $siswa->kelas,
+        ]);
     }
 
 
@@ -62,6 +92,26 @@ class JadwalMapelController extends Controller
             'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
         ]);
 
+        // Cek apakah ada jadwal bentrok
+        $jadwalBentrok = JadwalMapel::where('kelas_id', $request->kelas_id)
+            ->where('semester_id', $semesterAktif->id)
+            ->where('hari', $request->hari)
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                    ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
+                    ->orWhere(function ($query) use ($request) {
+                        $query->where('jam_mulai', '<=', $request->jam_mulai)
+                            ->where('jam_selesai', '>=', $request->jam_selesai);
+                    });
+            })
+            ->exists();
+
+        if ($jadwalBentrok) {
+            Alert::error('Gagal', 'Jadwal bentrok dengan jadwal lain pada hari dan jam yang sama.');
+            return redirect()->back()->withInput();
+        }
+
+        // Simpan jika tidak bentrok
         JadwalMapel::create([
             'kelas_id' => $request->kelas_id,
             'mapel_id' => $request->mapel_id,
@@ -71,6 +121,7 @@ class JadwalMapelController extends Controller
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
         ]);
+
         Alert::success('Berhasil', 'Data jadwal mata pelajaran berhasil ditambahkan!');
         return redirect()->route('jadwal.index');
     }
@@ -124,9 +175,12 @@ class JadwalMapelController extends Controller
         return redirect()->route('jadwal.index');
     }
 
-    public function destroy(JadwalMapel $jadwal)
+    public function destroy($id)
     {
+        $jadwal = JadwalMapel::findOrFail($id);
         $jadwal->delete();
+        Alert::success('Berhasil', 'Data jadwal mata pelajaran berhasil dihapus!');
+
         return redirect()->route('jadwal.index');
     }
 

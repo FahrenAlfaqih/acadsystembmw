@@ -6,7 +6,6 @@
             @if(auth()->user()->role === 'tatausaha')
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-5">
-
                 <!-- Card Guru -->
                 <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
                     <div>
