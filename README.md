@@ -51,7 +51,7 @@ git clone https://github.com/username/sistem-akademik.git
 cd sistem-akademik
 ```
 
-### 2. Install semua dependensi Laravel
+### 2. Install semua dependensi Laravel, pastikan composer terinstall
 ```bash
 composer install
 composer update
