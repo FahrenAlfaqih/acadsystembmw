@@ -64,10 +64,6 @@ php artisan key:generate
 ```
 
 ### 4. Konfigurasi koneksi database
-DB_DATABASE=sistem_akademik
-DB_USERNAME=root
-DB_PASSWORD=
-
 
 ## 🧱 Migrasi dan Seeder
 
