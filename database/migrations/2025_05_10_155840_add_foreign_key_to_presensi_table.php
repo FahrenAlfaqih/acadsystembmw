@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::table('presensi', function (Blueprint $table) {
             $table->unsignedBigInteger('kelas_id')->nullable()->after('guru_id');
-        });
-
-        Schema::table('presensi', function (Blueprint $table) {
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('set null');
         });
     }
