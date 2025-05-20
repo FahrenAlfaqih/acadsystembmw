@@ -40,7 +40,6 @@ Pastikan Anda sudah menginstall:
 - Laravel (opsional: melalui Laravel installer atau via `composer`)
 - Web server lokal seperti Laragon atau XAMPP
 
----
 
 ## ⚙️ Langkah Instalasi
 
@@ -55,6 +54,7 @@ cd sistem-akademik
 ### 2. Install semua dependensi Laravel
 ```bash
 composer install
+composer update
 ```
 
 ### 3. Salin file .env dan generate application key
