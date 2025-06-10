@@ -16,8 +16,14 @@
                     <!-- Pilih Siswa -->
                     <x-select id="siswa_id" name="siswa_id" label="Pilih Siswa" :options="$siswaList->pluck('nama', 'id')" required />
 
-                    <!-- Nilai Harian -->
-                    <x-input type="number" name="nilai_harian" label="Nilai Harian" min="0" max="100" />
+                    <!-- Nilai Ulangan Harian -->
+                    <x-input type="number" name="nilai_ulangan_harian" label="Nilai Ulangan Harian" min="0" max="100" />
+
+                    <!-- Nilai Quiz -->
+                    <x-input type="number" name="nilai_quiz" label="Nilai Quiz" min="0" max="100" />
+
+                    <!-- Nilai Tugas -->
+                    <x-input type="number" name="nilai_tugas" label="Nilai Tugas" min="0" max="100" />
 
                     <!-- Nilai UTS -->
                     <x-input type="number" name="nilai_uts" label="Nilai UTS" min="0" max="100" />

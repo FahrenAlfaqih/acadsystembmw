@@ -81,8 +81,8 @@
                             <td class="py-3 px-4 text-sm">{{ $item->mapel->nama_mapel }}</td>
                             <td class="py-3 px-4 text-sm">{{ $item->guru->nama }}</td>
                             <td class="py-3 px-4 text-sm">{{ $item->hari }}</td>
-                            <td class="py-3 px-4 text-sm">{{ $item->jam_mulai }}</td>
-                            <td class="py-3 px-4 text-sm">{{ $item->jam_selesai }}</td>
+                            <td class="py-3 px-4 text-sm">{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }}</td>
+                            <td class="py-3 px-4 text-sm">{{ \Carbon\Carbon::parse($item->jam_selesai)->format('H:i') }}</td>
                             <td class="py-3 px-4 text-sm text-center space-x-2">
                                 @if(auth()->user()->role === 'tatausaha')
                                 <a href="{{ route('jadwal.edit', $item->id) }}" class="text-yellow-600 hover:underline">

@@ -39,7 +39,15 @@
                     <!-- Kolom Kanan -->
                     <div class="space-y-4">
                         <!-- Hari -->
-                        <x-input name="hari" label="Hari" value="{{ old('hari', $jadwal->hari) }}" required />
+                        <x-select name="hari" label="Hari" :options="[
+    'Senin' => 'Senin', 
+    'Selasa' => 'Selasa', 
+    'Rabu' => 'Rabu', 
+    'Kamis' => 'Kamis', 
+    'Jumat' => 'Jumat', 
+    'Sabtu' => 'Sabtu'
+]" value="{{ old('hari', $jadwal->hari) }}" required />
+
 
                         <!-- Jam Mulai -->
                         <x-input

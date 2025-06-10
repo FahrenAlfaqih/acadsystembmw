@@ -29,20 +29,26 @@ class NilaiController extends Controller
     {
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
-            'nilai_harian' => 'nullable|numeric',
+            'nilai_ulangan_harian' => 'nullable|numeric',
+            'nilai_quiz' => 'nullable|numeric',
+            'nilai_tugas' => 'nullable|numeric',
             'nilai_uts' => 'nullable|numeric',
             'nilai_uas' => 'nullable|numeric',
         ]);
 
-        $nilai_harian = $request->nilai_harian ?? 0;
+        $nilai_ulangan_harian = $request->nilai_ulangan_harian ?? 0;
+        $nilai_quiz = $request->nilai_quiz ?? 0;
+        $nilai_tugas = $request->nilai_tugas ?? 0;
         $nilai_uts = $request->nilai_uts ?? 0;
         $nilai_uas = $request->nilai_uas ?? 0;
+
+
+        $nilai_harian = ($nilai_ulangan_harian * 0.4) + ($nilai_quiz * 0.3) + ($nilai_tugas * 0.3);
 
         $rata_rata = ($nilai_harian + $nilai_uts + $nilai_uas) / 3;
         $grade = $this->getGrade($rata_rata);
 
         $guru_id = auth()->user()->guru->id;
-
 
         $nilai = Nilai::updateOrCreate(
             [
@@ -54,12 +60,16 @@ class NilaiController extends Controller
             ],
             [
                 'nilai_harian' => $nilai_harian,
+                'nilai_ulangan_harian' => $nilai_ulangan_harian,
+                'nilai_quiz' => $nilai_quiz,
+                'nilai_tugas' => $nilai_tugas,
                 'nilai_uts' => $nilai_uts,
                 'nilai_uas' => $nilai_uas,
                 'rata_rata' => $rata_rata,
                 'grade' => $grade,
             ]
         );
+
         Alert::success('Berhasil', 'Data Nilai berhasil disimpan!');
         return redirect()->route('guru.dashboard');
     }

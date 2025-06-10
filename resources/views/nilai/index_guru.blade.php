@@ -73,7 +73,10 @@
                             <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
                             <th class="py-3 px-4 text-sm font-medium">Kelas</th>
                             <th class="py-3 px-4 text-sm font-medium">Mapel</th>
-                            <th class="py-3 px-4 text-sm font-medium">Harian</th>
+                            <th class="py-3 px-4 text-sm font-medium">Ulangan Harian</th>
+                            <th class="py-3 px-4 text-sm font-medium">Quiz</th>
+                            <th class="py-3 px-4 text-sm font-medium">Tugas</th>
+                            <th class="py-3 px-4 text-sm font-medium">Total Nilai Harian</th>
                             <th class="py-3 px-4 text-sm font-medium">UTS</th>
                             <th class="py-3 px-4 text-sm font-medium">UAS</th>
                             <th class="py-3 px-4 text-sm font-medium">Rata-rata</th>
@@ -81,13 +84,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($nilaiList as $key =>$nilai)
+                        @foreach ($nilaiList as $key => $nilai)
                         <tr class="border-b hover:bg-gray-50 transition duration-300">
                             <td class="py-3 px-4 text-sm">{{ $key + 1 }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->siswa->nama ?? '-' }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->kelas->nama_kelas ?? '-' }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->mapel->nama_mapel ?? '-' }}</td>
-                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_harian }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_ulangan_harian }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_quiz }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_tugas }}</td>
+                            <td class="py-3 px-4 text-sm font-semibold text-blue-600">{{ $nilai->nilai_harian }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->nilai_uts }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->nilai_uas }}</td>
                             <td class="py-3 px-4 text-sm font-semibold text-blue-600">
@@ -118,5 +124,4 @@
             @endif
         </div>
     </div>
-
 </x-app-layout>

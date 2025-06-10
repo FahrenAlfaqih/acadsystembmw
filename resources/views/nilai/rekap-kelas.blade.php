@@ -31,9 +31,12 @@
                     <thead>
                         <tr class="bg-white text-gray-600">
                             <th class="py-3 px-4 text-sm font-medium">Nama Siswa</th>
-                            <th class="py-3 px-4 text-sm font-medium">Nilai Harian</th>
-                            <th class="py-3 px-4 text-sm font-medium">Nilai UTS</th>
-                            <th class="py-3 px-4 text-sm font-medium">Nilai UAS</th>
+                            <th class="py-3 px-4 text-sm font-medium"> Ulangan Harian</th>
+                            <th class="py-3 px-4 text-sm font-medium"> Quiz</th>
+                            <th class="py-3 px-4 text-sm font-medium"> Tugas</th>
+                            <th class="py-3 px-4 text-sm font-medium"> Total Nilai Harian</th>
+                            <th class="py-3 px-4 text-sm font-medium"> UTS</th>
+                            <th class="py-3 px-4 text-sm font-medium"> UAS</th>
                             <th class="py-3 px-4 text-sm font-medium">Rata-rata</th>
                             <th class="py-3 px-4 text-sm font-medium">Grade</th>
                         </tr>
@@ -45,7 +48,10 @@
                         @endphp
                         <tr class="border-b hover:bg-gray-50 transition duration-300">
                             <td class="py-3 px-4 text-sm">{{ $siswa->nama }}</td>
-                            <td class=" py-3 px-4 text-sm">{{ $nilai->nilai_harian ?? '-' }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_ulangan_harian }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_quiz }}</td>
+                            <td class="py-3 px-4 text-sm">{{ $nilai->nilai_tugas }}</td>
+                            <td class=" py-3 px-4 text-sm font-semibold text-blue-600">{{ $nilai->nilai_harian ?? '-' }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->nilai_uts ?? '-' }}</td>
                             <td class="py-3 px-4 text-sm">{{ $nilai->nilai_uas ?? '-' }}</td>
                             <td class="py-3 px-4 text-sm font-semibold text-blue-600">

@@ -37,8 +37,15 @@
 
                     <!-- Kolom Kanan -->
                     <div class="space-y-4">
-                        <!-- Hari -->
-                        <x-input name="hari" label="Hari" required />
+                        <!-- Hari Dropdown -->
+                        <x-select name="hari" label="Hari" :options="[
+                            'Senin' => 'Senin', 
+                            'Selasa' => 'Selasa', 
+                            'Rabu' => 'Rabu', 
+                            'Kamis' => 'Kamis', 
+                            'Jumat' => 'Jumat', 
+                            'Sabtu' => 'Sabtu'
+                        ]" required />
 
                         <!-- Jam Mulai -->
                         <x-input name="jam_mulai" label="Jam Mulai" type="time" required />
@@ -50,7 +57,7 @@
 
                 {{-- Tombol --}}
                 <div class="flex justify-end mt-8">
-                    <a href="{{ route('jadwal.index') }}"
+                    <a href="{{ route('jadwal.index') }} "
                         class="inline-block px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg mr-3 transition">
                         Batal
                     </a>
