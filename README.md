@@ -1,89 +1,138 @@
-# 📘 Sistem Akademik
+# 📘 BMW – Academic Management System
 
-
-Sistem Akademik adalah aplikasi Laravel untuk mengelola data keperluan akademik terkait Manajamen Guru, Siswa, Nilai, dan Presensi
+**BMW Sistem Akademik** is a Laravel-based web application designed to manage core academic operations such as teacher assignments, student records, grades, and attendance. Built with role-based access control, the system is tailored for **Tata Usaha (Admin)**, **Teachers**, and **Students** to interact through a modern, responsive interface.
 
 ---
 
-## 🔍 Preview Tampilan
-### User Autentikasi
+## ⚙️ Key Features
+
+- 🧑‍🏫 Teacher Management & Course Assignment
+- 🎓 Student Registration & Academic Records
+- 📝 Grade Input & Reports
+- 📆 Attendance Tracking
+- 🔐 Role-based Access for Admin, Teachers, and Students
+- 🖥️ Clean & Responsive UI for all user types
+
+---
+
+## 🔍 UI Preview
+
+### 🔑 User Login & Authentication
 ![image](https://github.com/user-attachments/assets/9ef87a6e-664d-45e8-ad26-745b475165b4)
 ![image](https://github.com/user-attachments/assets/81c38f82-bdaf-461d-97e4-fcc113e9571d)
 
-### User Role Tata Usaha
-![image](https://github.com/user-attachments/assets/4158d47d-8abc-4e9d-ba99-02f64d647ad8)
-![image](https://github.com/user-attachments/assets/df467e53-f8c4-46cf-a52b-20899f3e69f9)
-![image](https://github.com/user-attachments/assets/ffd5ccda-b57e-4b7a-b7c0-e4b055430d74)
+### 👥 SuperAdmin Roles
+## Dashboard
+![image](https://github.com/user-attachments/assets/fad73c5e-eb4f-4521-b8a4-c382e8b92a31)
+## Page for add new teachers account
+![image](https://github.com/user-attachments/assets/e142e8e2-6821-4a68-a1fd-3749a7763a04)
+## Page for add new students account
+![image](https://github.com/user-attachments/assets/95638cf5-6a82-401a-9372-d62cd28a2420)
+## Page for add new headmaster account
+![image](https://github.com/user-attachments/assets/c184255a-83ae-4c9a-8deb-f863afe87535)
+
+### 🧾 Tata Usaha Roles
+## Dashboard
+![image](https://github.com/user-attachments/assets/e90d5c8c-6451-4d23-8079-8c70ff724585)
+## Manage Students Data
+![image](https://github.com/user-attachments/assets/20b6ab73-9dfa-4e69-9b9b-889b4ed681e1)
+## Manage Teachers Data
+![image](https://github.com/user-attachments/assets/0b3fff11-7e11-4741-ba80-55c7ffbe5961)
+## Manage HeadMasters Data
+![image](https://github.com/user-attachments/assets/c7f81f6e-3d47-4bd0-962c-44ca22a468b4)
+## Manage Semesters Data
+![image](https://github.com/user-attachments/assets/6f769b1b-2084-4fd5-a089-45bc3deaa94f)
+## Manage Subjects Data
+![image](https://github.com/user-attachments/assets/a29ee52f-26b4-429c-8d2a-bd09194e2831)
+## Manage Classes Data
+![image](https://github.com/user-attachments/assets/e822d27f-3507-48d3-9a2c-5993ed1d7d5f)
+## Manage Schedules Data
+![image](https://github.com/user-attachments/assets/caf11569-99a6-4b15-b1a8-4b26bae0724c)
+## Print Student Report
+![image](https://github.com/user-attachments/assets/d6a07df0-5f12-40b9-9bc6-57efe70db831)
+
+### 👨‍🏫 Teacher Roles
+## Dashboard
+![image](https://github.com/user-attachments/assets/a578f687-24fc-4597-9cdf-4ba7f07367d5)
+## Student Scores Data
+![image](https://github.com/user-attachments/assets/fec6e69e-65e7-4b7c-9496-9bad8234d2d4)
+## Student Attendances Data
+![image](https://github.com/user-attachments/assets/90303c28-8679-481f-9e6e-68df20527478)
+## Print Student Report (HomeRoom Teacher)
+![image](https://github.com/user-attachments/assets/1f9a6b3d-35ad-43a7-af9a-d1b6dbb6d2af)
+## Word Files Report 
+![image](https://github.com/user-attachments/assets/a93a58b7-58e1-4dcb-80d6-d49dfeb32f50)
+## Grade Promotion (HomeRoom Teacher)
+![image](https://github.com/user-attachments/assets/2d9097db-c903-462e-8ac6-53729fae9ce0)
+
+### 👨‍🎓 Student Roles
+## Dashboard
+![image](https://github.com/user-attachments/assets/4c1ae229-875e-4e61-9426-ab8823937a71)
+## Student Schedules
+![image](https://github.com/user-attachments/assets/2ff72494-e3b9-4859-ad71-b4f0e629b711)
+## Student Scores
+![image](https://github.com/user-attachments/assets/a070010a-fec6-439e-bacc-aecdb1af4bfc)
+## Student Attendance
+![image](https://github.com/user-attachments/assets/bd266827-94fe-4254-b8e0-49d1d281c7ab)
 
 
+## 🧰 Tech Stack
 
-### User Role Guru
-![image](https://github.com/user-attachments/assets/10ce176e-e58d-499d-9293-cc0ad9cfbbbd)
-![image](https://github.com/user-attachments/assets/5dc3b624-9ed8-4446-ad6b-f80a2666edd3)
+| Layer     | Technology        |
+|-----------|-------------------|
+| Backend   | PHP 8+, Laravel 10 |
+| Frontend  | Blade Template, Bootstrap |
+| Database  | MySQL             |
+| Dev Tool  | Composer, Artisan, Laragon |
 
+---
 
+## 🚀 Getting Started
 
-### User Role Siswa
-![image](https://github.com/user-attachments/assets/4b323357-4cd2-4cf2-b1ec-8fb88576cf75)
-![image](https://github.com/user-attachments/assets/082f0d72-d4c1-4f97-8d5c-13f0bc596170)
-![image](https://github.com/user-attachments/assets/b027182b-d242-4185-8040-47bfbf162546)
+### 📦 Prerequisites
 
+Make sure the following are installed:
 
-
-## 📦 Persiapan Awal
-
-Pastikan Anda sudah menginstall:
-
-- PHP >= 8.0
+- PHP ≥ 8.0
 - Composer
 - MySQL
-- Laravel (opsional: melalui Laravel installer atau via `composer`)
-- Web server lokal seperti Laragon atau XAMPP
+- Laravel CLI (optional)
+- Local server: Laragon or XAMPP
 
+---
 
-## ⚙️ Langkah Instalasi
-
-### 1. Clone atau download project
+### 🛠️ Installation Steps
 
 ```bash
+# 1. Clone the project
 cd C:\laragon\www
 git clone https://github.com/username/sistem-akademik.git
 cd sistem-akademik
-```
 
-### 2. Install semua dependensi Laravel, pastikan composer terinstall
-```bash
+# 2. Install Laravel dependencies
 composer install
 composer update
-```
 
-### 3. Salin file .env dan generate application key
-```bash
+# 3. Create environment config & app key
 copy .env.example .env
 php artisan key:generate
+
+# 4. Configure .env to match your local database
 ```
-
-### 4. Konfigurasi koneksi database
-
-## 🧱 Migrasi dan Seeder
-
-### 5. Jalankan migrasi database
+### 🧱 Database Migration & Seeding
 ```bash
+# 5. Run database migrations
 php artisan migrate
-```
 
-### 6.  Jalankan database seeder untuk mengisi data awal
-```bash
+# 6. Seed the database with initial data
 php artisan db:seed
-```
 
-### 7. Membuat Storage Link
-```bash
+# 7. Create symbolic link for storage
 php artisan storage:link
-```
 
-### 8. Menjalankan Server Lokal
-```bash
+# 8. Launch the local development server
 php artisan serve
 ```
 
+### 🙋‍♂️ Developer
+Developed by Fahren Al Faqih as part of a full-stack academic management system project using Laravel framework.
