@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/preview/{kelas}', [RaporController::class, 'preview'])->name('rapor.preview');
         Route::get('/cetak/{kelas}', [RaporController::class, 'cetakPdf'])->name('rapor.cetakPdf');
         Route::get('/{kelasId}/siswa/{siswaId}/cetak', [RaporController::class, 'cetakPdfPerSiswa'])->name('rapor.cetak.per_siswa');
+        Route::get('/{kelasId}/siswa/{siswaId}/cetak', [RaporController::class, 'cetakWordPerSiswa'])->name('rapor.cetakword.per_siswa');
     });
 });
 

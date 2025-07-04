@@ -12,25 +12,31 @@
             <form method="POST" action="{{ route('nilai.store', ['kelas_id' => $kelas_id, 'mapel_id' => $mapel_id, 'semester_id' => $semester_id]) }}">
                 @csrf
 
-                <div class="space-y-4">
-                    <!-- Pilih Siswa -->
+                <!-- Pilih Siswa -->
+                <div class="mb-6">
                     <x-select id="siswa_id" name="siswa_id" label="Pilih Siswa" :options="$siswaList->pluck('nama', 'id')" required />
-
-                    <!-- Nilai Ulangan Harian -->
-                    <x-input type="number" name="nilai_ulangan_harian" label="Nilai Ulangan Harian" min="0" max="100" />
-
-                    <!-- Nilai Quiz -->
-                    <x-input type="number" name="nilai_quiz" label="Nilai Quiz" min="0" max="100" />
-
-                    <!-- Nilai Tugas -->
-                    <x-input type="number" name="nilai_tugas" label="Nilai Tugas" min="0" max="100" />
-
-                    <!-- Nilai UTS -->
-                    <x-input type="number" name="nilai_uts" label="Nilai UTS" min="0" max="100" />
-
-                    <!-- Nilai UAS -->
-                    <x-input type="number" name="nilai_uas" label="Nilai UAS" min="0" max="100" />
                 </div>
+
+                <!-- Input Nilai -->
+                <div class="flex gap-6 mb-4 items-end">
+                    <div class="flex-1">
+                        <x-input type="number" name="nilai_ulangan_harian" id="nilai_ulangan_harian" label="Ulangan Harian" min="0" max="100" />
+                    </div>
+                    <div class="flex-1">
+                        <x-input type="number" name="nilai_tugas" id="nilai_tugas" label="Tugas" min="0" max="100" />
+                    </div>
+                    <div class="flex-1">
+                        <x-input type="number" name="nilai_quiz" id="nilai_quiz" label="Quiz" min="0" max="100" />
+                    </div>
+                    <div class="flex-1">
+                        <x-input type="number" name="nilai_uts" id="nilai_uts" label="UTS" min="0" max="100" />
+                    </div>
+                    <div class="flex-1">
+                        <x-input type="number" name="nilai_uas" id="nilai_uas" label="UAS" min="0" max="100" />
+                    </div>
+                </div>
+
+
 
                 <!-- Tombol Aksi -->
                 <div class="flex justify-end mt-8">

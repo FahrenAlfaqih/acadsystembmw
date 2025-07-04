@@ -18,10 +18,10 @@
                 </a>
                 @endif
 
-                <a href="{{ route('rapor.cetakPdf', $kelas->id) }}" target="_blank"
+                <!-- <a href="{{ route('rapor.cetakPdf', $kelas->id) }}" target="_blank"
                     class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">
                     📄 Download Semua Rapor (PDF)
-                </a>
+                </a> -->
             </div>
 
             @if($siswa->isEmpty())
@@ -42,7 +42,7 @@
                             <td class="py-3 px-4 text-sm">{{ $key+1 }}</td>
                             <td class="py-3 px-4 text-sm">{{ $item->nama }}</td>
                             <td class="py-3 px-4 text-sm">
-                                <a href="{{ route('rapor.cetak.per_siswa', [$kelas->id, $item->id]) }}" target="_blank"
+                                <a href="{{ route('rapor.cetakword.per_siswa', [$kelas->id, $item->id]) }}" target="_blank"
                                     class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
                                     <i class="fa-solid fa-print"></i>
                                 </a>
