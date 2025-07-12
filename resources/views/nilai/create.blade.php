@@ -12,44 +12,60 @@
             <form method="POST" action="{{ route('nilai.store', ['kelas_id' => $kelas_id, 'mapel_id' => $mapel_id, 'semester_id' => $semester_id]) }}">
                 @csrf
 
-                <!-- Pilih Siswa -->
-                <div class="mb-6">
-                    <x-select id="siswa_id" name="siswa_id" label="Pilih Siswa" :options="$siswaList->pluck('nama', 'id')" required />
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-xl shadow-md">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3 text-left bg-gray-100 rounded-tl-xl">Nama Siswa</th>
+                                <th class="px-4 py-3 text-left bg-gray-100">Ulangan Harian</th>
+                                <th class="px-4 py-3 text-left bg-gray-100">Tugas</th>
+                                <th class="px-4 py-3 text-left bg-gray-100">Quiz</th>
+                                <th class="px-4 py-3 text-left bg-gray-100">UTS</th>
+                                <th class="px-4 py-3 text-left bg-gray-100 rounded-tr-xl">UAS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($siswaList as $index => $siswa)
+                            <tr class="hover:bg-blue-50 transition">
+                                <td class="border-b px-4 py-3 font-medium text-gray-700">
+                                    {{ $siswa->nama }}
+                                    <input type="hidden" name="siswa_id[]" value="{{ $siswa->id }}">
+                                </td>
+                                <td class="border-b px-4 py-3">
+                                    <input type="number" name="nilai_ulangan_harian[]" min="0" max="100" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="0" />
+                                </td>
+                                <td class="border-b px-4 py-3">
+                                    <input type="number" name="nilai_tugas[]" min="0" max="100" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="0" />
+                                </td>
+                                <td class="border-b px-4 py-3">
+                                    <input type="number" name="nilai_quiz[]" min="0" max="100" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="0" />
+                                </td>
+                                <td class="border-b px-4 py-3">
+                                    <input type="number" name="nilai_uts[]" min="0" max="100" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="0" />
+                                </td>
+                                <td class="border-b px-4 py-3">
+                                    <input type="number" name="nilai_uas[]" min="0" max="100" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="0" />
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- Input Nilai -->
-                <div class="flex gap-6 mb-4 items-end">
-                    <div class="flex-1">
-                        <x-input type="number" name="nilai_ulangan_harian" id="nilai_ulangan_harian" label="Ulangan Harian" min="0" max="100" />
-                    </div>
-                    <div class="flex-1">
-                        <x-input type="number" name="nilai_tugas" id="nilai_tugas" label="Tugas" min="0" max="100" />
-                    </div>
-                    <div class="flex-1">
-                        <x-input type="number" name="nilai_quiz" id="nilai_quiz" label="Quiz" min="0" max="100" />
-                    </div>
-                    <div class="flex-1">
-                        <x-input type="number" name="nilai_uts" id="nilai_uts" label="UTS" min="0" max="100" />
-                    </div>
-                    <div class="flex-1">
-                        <x-input type="number" name="nilai_uas" id="nilai_uas" label="UAS" min="0" max="100" />
-                    </div>
-                </div>
-
-
 
                 <!-- Tombol Aksi -->
                 <div class="flex justify-end mt-8">
                     <a href="{{ route('guru.dashboard') }}"
-                        class="inline-block px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg mr-3 transition">
+                        class="inline-block px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl mr-3 transition">
                         Batal
                     </a>
                     <button type="submit"
-                        class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-lg shadow-md transition">
+                        class="inline-block px-6 py-2.5 text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm rounded-xl shadow-md transition">
                         Simpan Nilai
                     </button>
                 </div>
             </form>
+
+
         </div>
     </div>
 

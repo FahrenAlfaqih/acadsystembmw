@@ -27,52 +27,54 @@ class NilaiController extends Controller
 
     public function store(Request $request, $kelas_id, $mapel_id, $semester_id)
     {
+        // Validasi array
         $request->validate([
-            'siswa_id' => 'required|exists:siswa,id',
-            'nilai_ulangan_harian' => 'nullable|numeric',
-            'nilai_quiz' => 'nullable|numeric',
-            'nilai_tugas' => 'nullable|numeric',
-            'nilai_uts' => 'nullable|numeric',
-            'nilai_uas' => 'nullable|numeric',
+            'siswa_id' => 'required|array',
+            'nilai_ulangan_harian' => 'array',
+            'nilai_tugas' => 'array',
+            'nilai_quiz' => 'array',
+            'nilai_uts' => 'array',
+            'nilai_uas' => 'array',
         ]);
-
-        $nilai_ulangan_harian = $request->nilai_ulangan_harian ?? 0;
-        $nilai_quiz = $request->nilai_quiz ?? 0;
-        $nilai_tugas = $request->nilai_tugas ?? 0;
-        $nilai_uts = $request->nilai_uts ?? 0;
-        $nilai_uas = $request->nilai_uas ?? 0;
-
-
-        $nilai_harian = ($nilai_ulangan_harian * 0.4) + ($nilai_quiz * 0.3) + ($nilai_tugas * 0.3);
-
-        $rata_rata = ($nilai_harian + $nilai_uts + $nilai_uas) / 3;
-        $grade = $this->getGrade($rata_rata);
 
         $guru_id = auth()->user()->guru->id;
 
-        $nilai = Nilai::updateOrCreate(
-            [
-                'siswa_id' => $request->siswa_id,
-                'mapel_id' => $mapel_id,
-                'guru_id' => $guru_id,
-                'semester_id' => $semester_id,
-                'kelas_id' => $kelas_id,
-            ],
-            [
-                'nilai_harian' => $nilai_harian,
-                'nilai_ulangan_harian' => $nilai_ulangan_harian,
-                'nilai_quiz' => $nilai_quiz,
-                'nilai_tugas' => $nilai_tugas,
-                'nilai_uts' => $nilai_uts,
-                'nilai_uas' => $nilai_uas,
-                'rata_rata' => $rata_rata,
-                'grade' => $grade,
-            ]
-        );
+        foreach ($request->siswa_id as $i => $siswa_id) {
+            $nilai_ulangan_harian = $request->nilai_ulangan_harian[$i] ?? 0;
+            $nilai_quiz = $request->nilai_quiz[$i] ?? 0;
+            $nilai_tugas = $request->nilai_tugas[$i] ?? 0;
+            $nilai_uts = $request->nilai_uts[$i] ?? 0;
+            $nilai_uas = $request->nilai_uas[$i] ?? 0;
+
+            $nilai_harian = ($nilai_ulangan_harian * 0.4) + ($nilai_quiz * 0.3) + ($nilai_tugas * 0.3);
+            $rata_rata = ($nilai_harian + $nilai_uts + $nilai_uas) / 3;
+            $grade = $this->getGrade($rata_rata);
+
+            Nilai::updateOrCreate(
+                [
+                    'siswa_id' => $siswa_id,
+                    'mapel_id' => $mapel_id,
+                    'guru_id' => $guru_id,
+                    'semester_id' => $semester_id,
+                    'kelas_id' => $kelas_id,
+                ],
+                [
+                    'nilai_harian' => $nilai_harian,
+                    'nilai_ulangan_harian' => $nilai_ulangan_harian,
+                    'nilai_quiz' => $nilai_quiz,
+                    'nilai_tugas' => $nilai_tugas,
+                    'nilai_uts' => $nilai_uts,
+                    'nilai_uas' => $nilai_uas,
+                    'rata_rata' => $rata_rata,
+                    'grade' => $grade,
+                ]
+            );
+        }
 
         Alert::success('Berhasil', 'Data Nilai berhasil disimpan!');
         return redirect()->route('guru.dashboard');
     }
+
 
 
     public function getGrade($rataRata)
